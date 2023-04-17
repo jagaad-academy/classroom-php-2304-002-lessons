@@ -1,0 +1,12 @@
+{
+  "name": "jagaad/cli-shopping",
+  "description": "Simple CLI Shopping",
+  "autoload": {
+    "psr-4": {
+      "Jagaad\\": "src/"
+    }
+  },
+  "require": {
+    "ext-readline": "*"
+  }
+}

@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS restapi;
+
+USE restapi;
+
+CREATE TABLE IF NOT EXISTS students (
+    id VARCHAR(155) NOT NULL,
+    name VARCHAR(155) NOT NULL,
+    last_name VARCHAR(155) NOT NULL,
+    country VARCHAR(155) NOT NULL,
+    PRIMARY KEY (id)
+);

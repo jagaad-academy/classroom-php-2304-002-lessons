@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Form</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <form action="https://www.google.com/" method="post">
+        <ul id="list-data">
+            <li>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="user_name" placeholder="Type your name here">
+            </li>
+            <li>
+                <label for="mail">E-mail:</label>
+                <input type="email" id="mail" name="user_email">
+            </li>
+            <li>
+                <label for="msg">Message:</label>
+                <textarea id="msg" name="user_message"></textarea>
+            </li>
+            <li class="button">
+                <button type="submit" onclick="hello(event)">Send your message</button>
+            </li>
+        </ul>
+    </form>
+
+    <!--
+    <button onclick="this.innerHTML = 'hello hello'">
+        The time is?
+    </button>
+    -->
+</body>
+</html>

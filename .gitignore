@@ -1,0 +1,4 @@
+*.txt
+/docker-compose.yml
+mysql-data
+.idea

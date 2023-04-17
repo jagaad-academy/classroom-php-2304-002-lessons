@@ -1,0 +1,21 @@
+{
+    "name": "jagaad/manage-bills",
+    "description": "Simple app to manage bills.",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "ManageBills\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lucas de Oliveira",
+            "email": "lucas.oliveira@jagaad.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "ext-readline": "*",
+        "ext-pdo": "*"
+    }
+}

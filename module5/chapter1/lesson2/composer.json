@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "SplExamples\\": "src/"
+        }
+    },
+    "require": {
+        "illuminate/collections": "^9.48"
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "jagaad/file-uploads",
+  "description": "This is an application to test file uploads.",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "FileUploadsExample\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Lucas de Oliveira",
+      "email": "lucas.oliveira@jagaad.com"
+    }
+  ],
+  "require-dev": {
+    "phpstan/phpstan": "^1.9",
+    "squizlabs/php_codesniffer": "^3.7"
+  }
+}

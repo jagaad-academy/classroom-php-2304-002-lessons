@@ -1,0 +1,17 @@
+{
+    "name": "jagaad/oop-todo-list",
+    "description": "Simple Todo List using the OOP module topics.",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "OopTodoList\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lucas de Oliveira",
+            "email": "lucas.oliveira@jagaad.com"
+        }
+    ],
+    "require": {}
+}

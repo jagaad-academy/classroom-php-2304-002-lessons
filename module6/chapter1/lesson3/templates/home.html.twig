@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>{{ pageTitle }}</h1>
+
+    Hello, {{ name }}!
+
+    <ul>
+    {% for product in products %}
+         <li>{{ product.name }} - {{ "$" ~ product.price }}</li>
+    {% endfor %}
+    </ul>
+
+    <a href="{{ path('contact_page') }}">Go to contact page</a>
+
+{% endblock %}

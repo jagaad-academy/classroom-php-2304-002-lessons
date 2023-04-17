@@ -1,0 +1,24 @@
+{
+  "name": "jagaad/quality-toos",
+  "description": "This is an application to test quality php tools.",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "QualityToolsExample\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Lucas de Oliveira",
+      "email": "lucas.oliveira@jagaad.com"
+    }
+  ],
+  "require": {
+    "psr/log": "^3.0",
+    "monolog/monolog": "^3.2"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.9",
+    "squizlabs/php_codesniffer": "^3.7"
+  }
+}

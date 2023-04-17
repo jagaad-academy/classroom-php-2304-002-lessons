@@ -1,0 +1,18 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Lesson4\\": "src/"
+        }
+    },
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.6",
+        "nyholm/psr7": "^1.5",
+        "nyholm/psr7-server": "^1.0",
+        "guzzlehttp/psr7": "^2",
+        "laminas/laminas-diactoros": "^2.24",
+        "fakerphp/faker": "^1.21",
+        "tuupola/slim-jwt-auth": "^3.7",
+        "vlucas/phpdotenv": "^5.5"
+    }
+}
