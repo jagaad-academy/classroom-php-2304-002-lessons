@@ -1,5 +1,0 @@
-[2023-02-07T18:43:51.586658+01:00] simple-shop.ERROR: An exception occurred in the driver: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it [] []
-[2023-02-07T18:45:48.943424+01:00] simple-shop.ERROR: Too few arguments to function SimpleShop\Service\CreateProduct::__construct(), 1 passed in C:\Users\lucas\PHPCourse\module5\chapter3\lesson2\public\index.php on line 29 and exactly 2 expected [] []
-[2023-02-07T18:45:56.207306+01:00] simple-shop.ERROR: Too few arguments to function SimpleShop\Service\CreateProduct::__construct(), 1 passed in C:\Users\lucas\PHPCourse\module5\chapter3\lesson2\public\index.php on line 29 and exactly 2 expected [] []
-[2023-02-07T18:45:59.799998+01:00] simple-shop.ERROR: Too few arguments to function SimpleShop\Service\CreateProduct::__construct(), 1 passed in C:\Users\lucas\PHPCourse\module5\chapter3\lesson2\public\index.php on line 29 and exactly 2 expected [] []
-[2023-02-07T19:00:49.506691+01:00] simple-shop.ERROR: invalid inputs exception [] []
