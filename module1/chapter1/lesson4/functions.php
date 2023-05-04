@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+echo "Test git pull!";
+
 function takes_array(array $input)
 {
     echo "$input[0] + $input[1] = " . $input[0] + $input[1];
