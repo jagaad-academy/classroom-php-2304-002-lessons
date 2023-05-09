@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript example</title>
+</head>
+<body>
+<style>
+  .form-elements{
+    margin-bottom: 1rem;
+  }
+</style>
+
+<div style="margin: 1rem auto; max-width: 900px">
+  <form action="#" method="post">
+    <div class="form-elements">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="user_name">
+    </div>
+    <div class="form-elements">
+      <label for="mail">E-mail:</label>
+      <input type="email" id="mail" name="user_email">
+    </div>
+    <div class="form-elements">
+      <label for="msg">Message:</label>
+      <textarea id="msg" name="user_message"></textarea>
+    </div>
+    <div class="form-elements">
+      <label for="msg">Classrooms:</label>
+      <select name="classrooms" id="classrooms">
+        <option value="0">Please select</option>
+        <option value="1">BE</option>
+        <option value="2">FE</option>
+      </select>
+    </div>
+    <div class="form-elements">
+      <button type="submit" id="buttonSend">Send your message</button>
+    </div>
+  </form>
+</div>
+
+<script type="application/javascript" src="script.js"></script>
+</body>
+</html>

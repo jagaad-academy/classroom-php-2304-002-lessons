@@ -1,0 +1,16 @@
+p, div {
+    color: red;
+    width: 500px;
+    border-width: 10px;
+    border-color: black;
+    border-style: solid;
+}
+
+#div1 {
+    color: green;
+}
+
+.div-class{
+    color: blue;
+    background-color: red;
+}
