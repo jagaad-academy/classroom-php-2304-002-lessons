@@ -1,0 +1,15 @@
+/*I requested to change the color of form*/
+#formTest{
+    color: yellow!important;
+}
+
+form[method="post"]{
+    color: pink;
+}
+
+.form-test {
+    color: blue;
+}
+form {
+    color: green;
+}
