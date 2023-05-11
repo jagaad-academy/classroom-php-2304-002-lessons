@@ -1,0 +1,17 @@
+.container{
+    max-width: 992px;
+    padding: 1rem;
+    margin: 2rem auto;
+    border: 1px solid black;
+    opacity: 1;
+}
+
+.name-wrapper,
+.email-wrapper,
+.message-wrapper{
+    margin-bottom: 1rem;
+}
+
+.hide{
+    display: none;
+}
