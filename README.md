@@ -9,3 +9,5 @@ Check some main topics presented in the PHP Course by module.
 ### Module 1: The Backend Tools and PHP Fundamentals
 
 **PHP Syntax:** there are different websites where you can learn more about PHP syntax and how to improve your skill with it. Some of them - that were even used in the lessons - are the [PHP.net](https://www.php.net/manual/en/) and the [W3Schools](https://www.w3schools.com/php/).
+
+### Module 2: Web Application and Database Basics
