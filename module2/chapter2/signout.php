@@ -1,0 +1,3 @@
+<?php
+
+//sign-out functionality
