@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 ?>
 
 
@@ -26,9 +28,11 @@
             <li class="nav-item">
                 <a class="nav-link " href="admin.php">Administration</a>
             </li>
+            <?php if(!isset($_SESSION['userLoggedIn'])){ ?>
             <li class="nav-item">
                 <a class="nav-link " href="signin.php">Sign-in</a>
             </li>
+            <?php }?>
             <li class="nav-item">
                 <a class="nav-link " href="signout.php">Sign-out</a>
             </li>

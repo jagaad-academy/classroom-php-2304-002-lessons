@@ -1,6 +1,6 @@
 <?php
 
-
+session_start();
 //here comes sign-in functionality
 
 ?>
@@ -39,21 +39,21 @@
 </nav>
 <div class="container">
     <h1 class="mt-5">Sign-in form</h1>
-    <form>
+    <form action="auth.php" method="post">
         <!-- Email input -->
         <div class="form-outline mb-4">
-            <input type="email" id="form2Example1" class="form-control"/>
+            <input type="email" id="form2Example1" class="form-control" name="email"/>
             <label class="form-label" for="form2Example1">Email address</label>
         </div>
 
         <!-- Password input -->
         <div class="form-outline mb-4">
-            <input type="password" id="form2Example2" class="form-control"/>
+            <input type="password" id="form2Example2" class="form-control" name="password"/>
             <label class="form-label" for="form2Example2">Password</label>
         </div>
 
         <!-- Submit button -->
-        <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
+        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
     </form>
 
 

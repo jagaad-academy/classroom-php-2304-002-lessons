@@ -1,7 +1,10 @@
 <?php
 
-//here comes check if user is authenticated functionality
-//echo <<<HTML <meta http-equiv="refresh" content="2; url='index.php'" /> HTML;
+session_start();
+
+if(!isset($_SESSION['userLoggedIn'])){
+    echo '<meta http-equiv="refresh" content="0; url=\'signin.php\'" />';
+}
 
 ?>
 
@@ -29,9 +32,11 @@
             <li class="nav-item active">
                 <a class="nav-link " href="admin.php">Administration <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link " href="signin.php">Sign-in</a>
-            </li>
+            <?php if(!isset($_SESSION['userLoggedIn'])){ ?>
+                <li class="nav-item">
+                    <a class="nav-link " href="signin.php">Sign-in</a>
+                </li>
+            <?php }?>
             <li class="nav-item">
                 <a class="nav-link " href="signout.php">Sign-out</a>
             </li>
