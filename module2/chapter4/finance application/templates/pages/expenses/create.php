@@ -11,7 +11,7 @@ require_once __DIR__ . '/../../main.php';
 </div>
 <div class="row my-5">
     <div class="col-12">
-        <form action="#" method="post">
+        <form action="/controllers/expenses.php" method="post">
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
@@ -22,7 +22,10 @@ require_once __DIR__ . '/../../main.php';
                 <label for="categories" class="col-sm-2 col-form-label">Category</label>
                 <div class="col-sm-10">
                     <select name="categories" id="categories" class="form-control">
-<!--                        <option value=""></option>-->
+                        <option value="0">Please select a category</option>
+                        <?php foreach ($categories as $category) { ?>
+                            <option value="<?=$category['category_id']?>"><?=$category['name']?></option>
+                        <?php }?>
                     </select>
                 </div>
             </div>
@@ -30,7 +33,10 @@ require_once __DIR__ . '/../../main.php';
                 <label for="accounts" class="col-sm-2 col-form-label">Account</label>
                 <div class="col-sm-10">
                     <select name="accounts" id="accounts" class="form-control">
-<!--                        <option value=""></option>-->
+                        <option value="0">Please select an account</option>
+                        <?php foreach ($accounts as $account) { ?>
+                            <option value="<?=$account['account_id']?>"><?=$account['name']?></option>
+                        <?php }?>
                     </select>
                 </div>
             </div>

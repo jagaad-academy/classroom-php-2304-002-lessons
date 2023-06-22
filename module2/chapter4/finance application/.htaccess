@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} !\.
+RewriteRule ^([^/]+)/(manuscript|preprint)_registration$	/index.php?_mdl=msreg_md&_jrl=$1&_lcm=ms_reg_form&_acm=open [L]

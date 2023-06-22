@@ -6,15 +6,15 @@ require_once __DIR__ . '/../../main.php';
 
 <div class="row mt-5">
     <div class="col-12">
-        <h1>List of incomes</h1>
+        <h1>List of expenses</h1>
     </div>
 </div>
 <div class="row my-5">
     <div class="col-12">
         <?php
-         if(count($incomes) > 0){
+         if(count($expenses) > 0){
         ?>
-        <table class="table">
+        <table  class="table">
             <thead>
             <tr>
                 <th>Name</th>
@@ -28,16 +28,16 @@ require_once __DIR__ . '/../../main.php';
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($incomes as $income) {
+            <?php foreach ($expenses as $expense) {
                 echo "<tr>";
-                echo "<td>" . $income['name'] . "</td>";
-                echo "<td>" . $income['category_id'] . "</td>";
-                echo "<td>" . $income['account_id'] . "</td>";
-                echo "<td>" . $income['date'] . "</td>";
-                echo "<td>" . $income['periodicity'] . "</td>";
-                echo "<td>" . $income['status'] . "</td>";
-                echo "<td>" . $income['user_id'] . "</td>";
-                echo "<td><a href='/controllers/incomes.php?id=".$income['income_id']."'>Delete</a></td>";
+                echo "<td>" . $expense['name'] . "</td>";
+                echo "<td>" . $expense['category_id'] . "</td>";
+                echo "<td>" . $expense['account_id'] . "</td>";
+                echo "<td>" . $expense['date'] . "</td>";
+                echo "<td>" . $expense['periodicity'] . "</td>";
+                echo "<td>" . $expense['status'] . "</td>";
+                echo "<td>" . $expense['user_id'] . "</td>";
+                echo "<td><a href='/controllers/expenses.php?id=".$expense['expense_id']."'>Delete</a></td>";
                 echo "</tr>";
             }
             ?>
@@ -45,8 +45,8 @@ require_once __DIR__ . '/../../main.php';
         </table>
         <?php
         } else {
-         ?>
-             No incomes found.
+             ?>
+             No expenses found.
         <?php
         }
         ?>
