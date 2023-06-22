@@ -1,6 +1,5 @@
 <?php
-require_once __DIR__ . '/../db/mysql-connect.php';
-require_once __DIR__ . '/../functions/utils.php';
+redirectIfUserIsNotLoggedIn();
 
 $function = getFunctionName();
 
@@ -11,7 +10,7 @@ try {
     die;
 }
 
-function showCreateForm()
+function showCreateForm(): void
 {
     global $mysqli;
 
@@ -24,6 +23,35 @@ function showCreateForm()
     $accounts = $result->fetch_all(MYSQLI_ASSOC);
 
     require_once __DIR__ . '/../templates/pages/incomes/create.php';
+}
+
+/**
+ * @throws Exception
+ */
+function showUpdateForm(): void
+{
+    global $mysqli;
+
+    $id = htmlspecialchars($_GET['id']);
+    $sql = sprintf("SELECT * FROM incomes WHERE income_id=%d", $id);
+    $result = $mysqli->query($sql);
+    $income = $result->fetch_array(MYSQLI_ASSOC);
+
+    if($income === false){
+        throw new Exception('Income ' . $id . ' not found!');
+    }
+
+    $income['email'] = getUserEmailById($income['user_id']);
+
+    $sql = "SELECT * FROM categories";
+    $result = $mysqli->query($sql);
+    $categories = $result->fetch_all(MYSQLI_ASSOC);
+
+    $sql = "SELECT * FROM accounts";
+    $result = $mysqli->query($sql);
+    $accounts = $result->fetch_all(MYSQLI_ASSOC);
+
+    require_once __DIR__ . '/../templates/pages/incomes/update.php';
 }
 
 /**
@@ -51,7 +79,7 @@ function create(): void
     $statement = $mysqli->prepare($sql);
     $statement->execute();
 
-    echo '<meta http-equiv="refresh" content="1; url=\'/controllers/incomes.php\'" />';
+    echo '<meta http-equiv="refresh" content="1; url=\'/incomes\'" />';
 }
 
 /**
@@ -68,13 +96,18 @@ function update(): void
     $periodicity = filter_input(INPUT_POST, 'periodicity');
     $status = filter_input(INPUT_POST, 'status');
     $userEmail = filter_input(INPUT_POST, 'user-email');
-
+    $incomeId = htmlspecialchars($_GET['id']);
     $userId = getUserIdByEmail($userEmail);
 
-    $sql = sprintf("UPDATE incomes (income_id, name, category_id, account_id, date, periodicity, status, user_id) VALUES(NULL, '%s', %d, %d, '%s', %d, %d, %d)",
-        $name, $date, $categoryId, $accountId, $periodicity, $status, $userId);
+    $sql = sprintf("UPDATE incomes 
+        SET name='%s', category_id=%d, account_id=%d, date='%s', periodicity=%d, status=%d, user_id=%d
+        WHERE income_id=%d",
+        $name, $categoryId, $accountId, $date, $periodicity, $status, $userId, $incomeId);
+
     $statement = $mysqli->prepare($sql);
     $statement->execute();
+
+    echo '<meta http-equiv="refresh" content="1; url=\'/incomes\'" />';
 }
 
 function read(): void
@@ -92,12 +125,11 @@ function read(): void
 function delete(): void
 {
     global $mysqli;
-    $incomeId = filter_input(INPUT_GET, 'id');
+    $incomeId = htmlspecialchars($_GET['id']);
     $sql = sprintf("DELETE FROM incomes WHERE income_id=%d", (int)$incomeId);
+
     $statement = $mysqli->prepare($sql);
     $statement->execute();
 
-    echo '<meta http-equiv="refresh" content="1; url=\'/controllers/incomes.php\'" />';
+    echo '<meta http-equiv="refresh" content="1; url=\'/incomes\'" />';
 }
-
-require_once __DIR__ . '/../db/mysql-close.php';

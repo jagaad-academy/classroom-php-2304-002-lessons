@@ -1,13 +1,7 @@
 </div>
 </main>
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                ©2024
-            </div>
-        </div>
-    </div>
+<footer class="mt-5 py-3">
+
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

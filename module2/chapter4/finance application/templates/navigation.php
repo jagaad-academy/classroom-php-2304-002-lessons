@@ -6,13 +6,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/index.php">Home</a>
+                <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/signin.php">Sign in</a>
+                <?php if(isset($_SESSION['user']) && is_array($_SESSION['user'])){ ?>
+                    <a class="nav-link" href="/logout">Logout</a>
+                <?php } else {?>
+                    <a class="nav-link" href="/login">Login</a>
+                <?php }?>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/templates/pages/admin.php">Administration</a>
+                <a class="nav-link" href="/admin">Administration</a>
             </li>
         </ul>
     </div>

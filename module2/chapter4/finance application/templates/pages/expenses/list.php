@@ -37,7 +37,9 @@ require_once __DIR__ . '/../../main.php';
                 echo "<td>" . $expense['periodicity'] . "</td>";
                 echo "<td>" . $expense['status'] . "</td>";
                 echo "<td>" . $expense['user_id'] . "</td>";
-                echo "<td><a href='/controllers/expenses.php?id=".$expense['expense_id']."'>Delete</a></td>";
+                echo "<td><a href='/expenses/delete/id/".$expense['expense_id']."'>Delete</a>
+                        <a href='/expenses/update/id/".$expense['expense_id']."' class='ml-2'>Update</a>
+                        </td>";
                 echo "</tr>";
             }
             ?>

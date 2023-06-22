@@ -12,7 +12,7 @@ require_once __DIR__ . '/../../main.php';
 <div class="row my-5">
     <div class="col-12">
         <?php
-         if(count($incomes) > 0){
+         if(count($expenses) > 0){
         ?>
         <table class="table">
             <thead>
@@ -28,7 +28,7 @@ require_once __DIR__ . '/../../main.php';
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($incomes as $income) {
+            <?php foreach ($expenses as $income) {
                 echo "<tr>";
                 echo "<td>" . $income['name'] . "</td>";
                 echo "<td>" . $income['category_id'] . "</td>";
@@ -37,7 +37,9 @@ require_once __DIR__ . '/../../main.php';
                 echo "<td>" . $income['periodicity'] . "</td>";
                 echo "<td>" . $income['status'] . "</td>";
                 echo "<td>" . $income['user_id'] . "</td>";
-                echo "<td><a href='/controllers/incomes.php?id=".$income['income_id']."'>Delete</a></td>";
+                echo "<td><a href='/incomes/delete/id/".$income['income_id']."'>Delete</a>
+                        <a href='/incomes/update/id/".$income['income_id']."' class='ml-2'>Update</a>
+                        </td>";
                 echo "</tr>";
             }
             ?>

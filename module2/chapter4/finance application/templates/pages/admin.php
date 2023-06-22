@@ -5,7 +5,7 @@ require_once __DIR__ . '/../main.php';
 ?>
 
 <div class="row mt-5">
-    <div class="col-12">
+    <div class="col-12 text-center">
         <h1>Administration page</h1>
     </div>
 </div>
@@ -13,8 +13,9 @@ require_once __DIR__ . '/../main.php';
     <div class="col-12">
         <h2>Incomes administration</h2>
         <ul>
-            <li><a href="/controllers/incomes.php">List of incomes</a></li>
-            <li><a href="/controllers/incomes.php?create">Create an income</a></li>
+            <li><a href="/incomes">List of incomes</a></li>
+            <li><a href="/incomes/create">Create an income</a></li>
+            <li><a href="/revenue/incomes">Revenue of incomes</a></li>
         </ul>
     </div>
 </div>
@@ -22,8 +23,9 @@ require_once __DIR__ . '/../main.php';
     <div class="col-12">
         <h2>Expenses administration</h2>
         <ul>
-            <li><a href="/controllers/expenses.php">List of expenses</a></li>
-            <li><a href="/controllers/expenses.php?create">Create an expense</a></li>
+            <li><a href="/expenses">List of expenses</a></li>
+            <li><a href="/expenses/create">Create an expense</a></li>
+            <li><a href="/revenue/expenses">Revenue of expenses</a></li>
         </ul>
     </div>
 </div>

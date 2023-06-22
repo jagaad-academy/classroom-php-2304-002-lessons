@@ -11,7 +11,7 @@ require_once __DIR__ . '/../../main.php';
 </div>
 <div class="row my-5">
     <div class="col-12">
-        <form action="/controllers/incomes.php" method="post">
+        <form action="/incomes" method="post">
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
