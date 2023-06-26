@@ -62,20 +62,19 @@ function create(): void
     global $mysqli;
 
     $name = filter_input(INPUT_POST, 'name');
+    $amount = filter_input(INPUT_POST, 'amount');
     $date = filter_input(INPUT_POST, 'date');
     $categoryId = 1;
     $accountId = 1;
-//    $categoryId = filter_input(INPUT_POST, 'categories');
-//    $accountId = filter_input(INPUT_POST, 'accounts');
     $periodicity = filter_input(INPUT_POST, 'periodicity');
     $status = filter_input(INPUT_POST, 'status');
     $userEmail = filter_input(INPUT_POST, 'user-email');
 
     $userId = getUserIdByEmail($userEmail);
 
-    $sql = sprintf("INSERT INTO incomes (income_id, name, category_id, account_id, date, periodicity, status, user_id) 
-                            VALUES(NULL, '%s', %d, %d, '%s', %d, %d, %d)",
-        $name, $categoryId, $accountId, $date, $periodicity, $status, $userId);
+    $sql = sprintf("INSERT INTO incomes (income_id, name, amount, category_id, account_id, date, periodicity, status, user_id) 
+                            VALUES(NULL, '%s', %f, %d, %d, '%s', %d, %d, %d)",
+        $name, $amount, $categoryId, $accountId, $date, $periodicity, $status, $userId);
     $statement = $mysqli->prepare($sql);
     $statement->execute();
 
@@ -90,6 +89,7 @@ function update(): void
     global $mysqli;
 
     $name = filter_input(INPUT_POST, 'name');
+    $amount = filter_input(INPUT_POST, 'amount');
     $date = filter_input(INPUT_POST, 'date');
     $categoryId = filter_input(INPUT_POST, 'categories');
     $accountId = filter_input(INPUT_POST, 'accounts');
@@ -100,9 +100,9 @@ function update(): void
     $userId = getUserIdByEmail($userEmail);
 
     $sql = sprintf("UPDATE incomes 
-        SET name='%s', category_id=%d, account_id=%d, date='%s', periodicity=%d, status=%d, user_id=%d
+        SET name='%s', amount=%f, category_id=%d, account_id=%d, date='%s', periodicity=%d, status=%d, user_id=%d
         WHERE income_id=%d",
-        $name, $categoryId, $accountId, $date, $periodicity, $status, $userId, $incomeId);
+        $name, $amount, $categoryId, $accountId, $date, $periodicity, $status, $userId, $incomeId);
 
     $statement = $mysqli->prepare($sql);
     $statement->execute();
@@ -110,14 +110,44 @@ function update(): void
     echo '<meta http-equiv="refresh" content="1; url=\'/incomes\'" />';
 }
 
+/**
+ * @return void
+ */
 function read(): void
 {
     global $mysqli;
 
-    $sql = "SELECT * FROM incomes";
+    $sql = "SELECT i.*, c.name as category_name, a.name as account_name, u.full_name 
+            FROM incomes i
+            LEFT JOIN categories c ON c.category_id=i.category_id
+            LEFT JOIN accounts a ON a.account_id=i.account_id
+            LEFT JOIN users u ON u.user_id=i.user_id";
     $result = $mysqli->query($sql);
 
     $incomes = $result->fetch_all(MYSQLI_ASSOC);
+
+    foreach ($incomes as $key => $income) {
+        switch ($income['periodicity']){
+            case '0':
+                $incomes[$key]['periodicity_label'] = 'No';
+                break;
+            case '1':
+                $incomes[$key]['periodicity_label'] = 'Fixed';
+                break;
+            case '2':
+                $incomes[$key]['periodicity_label'] = 'Installments';
+                break;
+        }
+
+        switch ($income['status']){
+            case '0':
+                $incomes[$key]['status_label'] = 'unreceived';
+                break;
+            case '1':
+                $incomes[$key]['status_label'] = 'received';
+                break;
+        }
+    }
 
     require_once __DIR__ . '/../templates/pages/incomes/list.php';
 }

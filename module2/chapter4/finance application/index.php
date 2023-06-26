@@ -55,6 +55,7 @@ $routing = match($url){
     '/revenue/incomes' => [ 'file' => __DIR__ . '/controllers/revenue.php', 'get' => 'incomes'],
     '/revenue/expenses' => [ 'file' => __DIR__ . '/controllers/revenue.php', 'get' => 'expenses'],
     '/users' => [ 'file' => __DIR__ . '/controllers/users.php', 'get' => ''],
+    '/users/register' => [ 'file' => __DIR__ . '/controllers/users.php', 'get' => 'register'],
     '/login' => [ 'file' => __DIR__ . '/controllers/users.php', 'get' => 'login'],
     '/logout' => [ 'file' => __DIR__ . '/controllers/users.php', 'get' => 'logout'],
     '/admin' => [ 'file' => __DIR__ . '/controllers/users.php', 'get' => 'admin'],

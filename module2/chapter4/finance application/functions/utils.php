@@ -20,6 +20,10 @@ function getFunctionName(): string
         if(isset($_GET['login'])){
             $functionName = 'checkUserData';
         }
+
+        if(isset($_GET['register'])){
+            $functionName = 'register';
+        }
     } else {
         if($idExistsInGet){
             $functionName = 'delete';
@@ -51,6 +55,10 @@ function getFunctionName(): string
 
         if(isset($_GET['expenses'])){
             $functionName = 'expenses';
+        }
+
+        if(isset($_GET['register'])){
+            $functionName = 'showRegisterForm';
         }
     }
 

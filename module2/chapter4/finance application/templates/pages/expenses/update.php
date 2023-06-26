@@ -19,6 +19,12 @@ require_once __DIR__ . '/../../main.php';
                 </div>
             </div>
             <div class="form-group row">
+                <label for="amount" class="col-sm-2 col-form-label">Amount</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="amount" name="amount" value="<?=$expense['amount']?>">
+                </div>
+            </div>
+            <div class="form-group row">
                 <label for="categories" class="col-sm-2 col-form-label">Category</label>
                 <div class="col-sm-10">
                     <select name="categories" id="categories" class="form-control">

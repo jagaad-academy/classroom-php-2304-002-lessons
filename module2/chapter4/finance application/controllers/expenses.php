@@ -63,6 +63,7 @@ function create(): void
     global $mysqli;
 
     $name = filter_input(INPUT_POST, 'name');
+    $amount = filter_input(INPUT_POST, 'amount');
     $date = filter_input(INPUT_POST, 'date');
     $categoryId = filter_input(INPUT_POST, 'categories');
     $accountId = filter_input(INPUT_POST, 'accounts');
@@ -72,9 +73,9 @@ function create(): void
 
     $userId = getUserIdByEmail($userEmail);
 
-    $sql = sprintf("INSERT INTO expenses (expense_id, name, category_id, account_id, date, periodicity, status, user_id) 
-                            VALUES(NULL, '%s', %d, %d, '%s', %d, %d, %d)",
-        $name, $categoryId, $accountId, $date, $periodicity, $status, $userId);
+    $sql = sprintf("INSERT INTO expenses (expense_id, name, amount, category_id, account_id, date, periodicity, status, user_id) 
+                            VALUES(NULL, '%s', %f, %d, %d, '%s', %d, %d, %d)",
+        $name, $amount, $categoryId, $accountId, $date, $periodicity, $status, $userId);
     $statement = $mysqli->prepare($sql);
     $statement->execute();
 
@@ -90,6 +91,7 @@ function update(): void
     global $mysqli;
 
     $name = filter_input(INPUT_POST, 'name');
+    $amount = filter_input(INPUT_POST, 'amount');
     $date = filter_input(INPUT_POST, 'date');
     $categoryId = filter_input(INPUT_POST, 'categories');
     $accountId = filter_input(INPUT_POST, 'accounts');
@@ -100,9 +102,9 @@ function update(): void
     $userId = getUserIdByEmail($userEmail);
 
     $sql = sprintf("UPDATE expenses 
-        SET name='%s', category_id=%d, account_id=%d, date='%s', periodicity=%d, status=%d, user_id=%d
+        SET name='%s', amount=%f, category_id=%d, account_id=%d, date='%s', periodicity=%d, status=%d, user_id=%d
         WHERE expense_id=%d",
-        $name, $categoryId, $accountId, $date, $periodicity, $status, $userId, $expenseId);
+        $name, $amount, $categoryId, $accountId, $date, $periodicity, $status, $userId, $expenseId);
 
     $statement = $mysqli->prepare($sql);
     $statement->execute();
@@ -116,9 +118,37 @@ function read(): void
 {
     global $mysqli;
 
-    $sql = "SELECT * FROM expenses";
+    $sql = "SELECT e.*, c.name as category_name, a.name as account_name, u.full_name 
+            FROM expenses e
+            LEFT JOIN categories c ON c.category_id=e.category_id
+            LEFT JOIN accounts a ON a.account_id=e.account_id
+            LEFT JOIN users u ON u.user_id=e.user_id";
     $result = $mysqli->query($sql);
+
     $expenses = $result->fetch_all(MYSQLI_ASSOC);
+
+    foreach ($expenses as $key => $expense) {
+        switch ($expense['periodicity']){
+            case '0':
+                $expenses[$key]['periodicity_label'] = 'No';
+                break;
+            case '1':
+                $expenses[$key]['periodicity_label'] = 'Fixed';
+                break;
+            case '2':
+                $expenses[$key]['periodicity_label'] = 'Installments';
+                break;
+        }
+
+        switch ($expense['status']){
+            case '0':
+                $expenses[$key]['status_label'] = 'unreceived';
+                break;
+            case '1':
+                $expenses[$key]['status_label'] = 'received';
+                break;
+        }
+    }
 
     require_once __DIR__ . '/../templates/pages/expenses/list.php';
 }

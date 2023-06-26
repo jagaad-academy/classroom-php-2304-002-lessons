@@ -18,6 +18,7 @@ require_once __DIR__ . '/../../main.php';
             <thead>
             <tr>
                 <th>Name</th>
+                <th>Amount</th>
                 <th>Category</th>
                 <th>Account</th>
                 <th>Date</th>
@@ -31,12 +32,13 @@ require_once __DIR__ . '/../../main.php';
             <?php foreach ($expenses as $expense) {
                 echo "<tr>";
                 echo "<td>" . $expense['name'] . "</td>";
-                echo "<td>" . $expense['category_id'] . "</td>";
-                echo "<td>" . $expense['account_id'] . "</td>";
+                echo "<td>" . $expense['amount'] . "</td>";
+                echo "<td>" . $expense['category_name'] . "</td>";
+                echo "<td>" . $expense['account_name'] . "</td>";
                 echo "<td>" . $expense['date'] . "</td>";
-                echo "<td>" . $expense['periodicity'] . "</td>";
-                echo "<td>" . $expense['status'] . "</td>";
-                echo "<td>" . $expense['user_id'] . "</td>";
+                echo "<td>" . $expense['periodicity_label'] . "</td>";
+                echo "<td>" . $expense['status_label'] . "</td>";
+                echo "<td>" . $expense['full_name'] . "</td>";
                 echo "<td><a href='/expenses/delete/id/".$expense['expense_id']."'>Delete</a>
                         <a href='/expenses/update/id/".$expense['expense_id']."' class='ml-2'>Update</a>
                         </td>";

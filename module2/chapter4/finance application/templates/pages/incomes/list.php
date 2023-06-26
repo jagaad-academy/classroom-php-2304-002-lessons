@@ -12,12 +12,13 @@ require_once __DIR__ . '/../../main.php';
 <div class="row my-5">
     <div class="col-12">
         <?php
-         if(count($expenses) > 0){
+         if(count($incomes) > 0){
         ?>
         <table class="table">
             <thead>
             <tr>
                 <th>Name</th>
+                <th>Amount</th>
                 <th>Category</th>
                 <th>Account</th>
                 <th>Date</th>
@@ -28,15 +29,16 @@ require_once __DIR__ . '/../../main.php';
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($expenses as $income) {
+            <?php foreach ($incomes as $income) {
                 echo "<tr>";
                 echo "<td>" . $income['name'] . "</td>";
-                echo "<td>" . $income['category_id'] . "</td>";
-                echo "<td>" . $income['account_id'] . "</td>";
+                echo "<td>" . $income['amount'] . "</td>";
+                echo "<td>" . $income['category_name'] . "</td>";
+                echo "<td>" . $income['account_name'] . "</td>";
                 echo "<td>" . $income['date'] . "</td>";
-                echo "<td>" . $income['periodicity'] . "</td>";
-                echo "<td>" . $income['status'] . "</td>";
-                echo "<td>" . $income['user_id'] . "</td>";
+                echo "<td>" . $income['periodicity_label'] . "</td>";
+                echo "<td>" . $income['status_label'] . "</td>";
+                echo "<td>" . $income['full_name'] . "</td>";
                 echo "<td><a href='/incomes/delete/id/".$income['income_id']."'>Delete</a>
                         <a href='/incomes/update/id/".$income['income_id']."' class='ml-2'>Update</a>
                         </td>";

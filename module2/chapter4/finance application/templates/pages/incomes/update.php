@@ -6,16 +6,22 @@ require_once __DIR__ . '/../../main.php';
 
 <div class="row mt-5">
     <div class="col-12">
-        <h1>Update an income <?=$expense['name'] ?></h1>
+        <h1>Update an income <?=$income['name'] ?></h1>
     </div>
 </div>
 <div class="row my-5">
     <div class="col-12">
-        <form action="/incomes/update/id/<?=$expense['income_id']?>" method="post">
+        <form action="/incomes/update/id/<?=$income['income_id']?>" method="post">
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" name="name" value="<?=$expense['name']?>">
+                    <input type="text" class="form-control" id="name" name="name" value="<?=$income['name']?>">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="amount" class="col-sm-2 col-form-label">Amount</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="amount" name="amount" value="<?=$income['amount']?>">
                 </div>
             </div>
             <div class="form-group row">
@@ -24,7 +30,7 @@ require_once __DIR__ . '/../../main.php';
                     <select name="categories" id="categories" class="form-control">
                         <option value="0">Please select a category</option>
                         <?php foreach ($categories as $category) {
-                            if($expense['category_id'] == $category['category_id']){
+                            if($income['category_id'] == $category['category_id']){
                         ?>
                             <option selected value="<?=$category['category_id']?>"><?=$category['name']?></option>\
                             <?php
@@ -42,7 +48,7 @@ require_once __DIR__ . '/../../main.php';
                     <select name="accounts" id="accounts" class="form-control">
                         <option value="0">Please select an account</option>
                         <?php foreach ($accounts as $account) {
-                            if($expense['account_id'] == $account['account_id']){
+                            if($income['account_id'] == $account['account_id']){
                             ?>
                             <option value="<?=$account['account_id']?>" selected><?=$account['name']?></option>
                                 <?php }else { ?>
@@ -54,26 +60,26 @@ require_once __DIR__ . '/../../main.php';
             <div class="form-group row">
                 <label for="date" class="col-sm-2 col-form-label">Date</label>
                 <div class="col-sm-10">
-                    <input type="date" name="date" id="date" class="form-control" value="<?=$expense['date']?>">
+                    <input type="date" name="date" id="date" class="form-control" value="<?=$income['date']?>">
                 </div>
             </div>
             <fieldset class="form-group row">
                 <legend class="col-form-label col-sm-2 float-sm-left pt-0">Periodicity</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" <?php if($expense['periodicity'] == 0) echo "checked"; ?> type="radio" name="periodicity" id="periodicity1" value="0" >
+                        <input class="form-check-input" <?php if($income['periodicity'] == 0) echo "checked"; ?> type="radio" name="periodicity" id="periodicity1" value="0" >
                         <label class="form-check-label" for="periodicity1">
                             No
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" <?php if($expense['periodicity'] == 1) echo "checked"; ?> type="radio" name="periodicity" id="periodicity2" value="1">
+                        <input class="form-check-input" <?php if($income['periodicity'] == 1) echo "checked"; ?> type="radio" name="periodicity" id="periodicity2" value="1">
                         <label class="form-check-label" for="periodicity2">
                             Fixed
                         </label>
                     </div>
                     <div class="form-check disabled">
-                        <input class="form-check-input" <?php if($expense['periodicity'] == 2) echo "checked"; ?> type="radio" name="periodicity" id="periodicity3" value="2">
+                        <input class="form-check-input" <?php if($income['periodicity'] == 2) echo "checked"; ?> type="radio" name="periodicity" id="periodicity3" value="2">
                         <label class="form-check-label" for="periodicity3">
                             Installments
                         </label>
@@ -84,13 +90,13 @@ require_once __DIR__ . '/../../main.php';
                 <legend class="col-form-label col-sm-2 float-sm-left pt-0">Status</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" <?php if($expense['status'] == 0) echo "checked"; ?> type="radio" name="status" id="status1" value="0" >
+                        <input class="form-check-input" <?php if($income['status'] == 0) echo "checked"; ?> type="radio" name="status" id="status1" value="0" >
                         <label class="form-check-label" for="status1">
                             Unreceived
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" <?php if($expense['status'] == 1) echo "checked"; ?> type="radio" name="status" id="status2" value="1">
+                        <input class="form-check-input" <?php if($income['status'] == 1) echo "checked"; ?> type="radio" name="status" id="status2" value="1">
                         <label class="form-check-label" for="status2">
                             Received
                         </label>
@@ -100,7 +106,7 @@ require_once __DIR__ . '/../../main.php';
             <div class="form-group row">
                 <label for="user-email" class="col-sm-2 col-form-label">User email</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" id="user-email" name="user-email" value="<?=$expense['email']?>">
+                    <input type="email" class="form-control" id="user-email" name="user-email" value="<?=$income['email']?>">
                 </div>
             </div>
             <div class="form-group row">
