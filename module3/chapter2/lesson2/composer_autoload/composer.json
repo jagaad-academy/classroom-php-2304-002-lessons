@@ -1,0 +1,17 @@
+{
+    "name": "hennadii.shvedko/composer_autoload",
+    "description": "Composer autoloading example",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "JagaadAcademy\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hennadii Shvedko",
+            "email": "hennadii.shvedko@jagaad.com"
+        }
+    ],
+    "require": {}
+}

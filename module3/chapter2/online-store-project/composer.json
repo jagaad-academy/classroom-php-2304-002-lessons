@@ -1,0 +1,16 @@
+{
+    "name": "hennadii.shvedko/online-store-project",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "OnlineStoreProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hennadii Shvedko",
+            "email": "hennadii.shvedko@jagaad.com"
+        }
+    ],
+    "require": {}
+}
