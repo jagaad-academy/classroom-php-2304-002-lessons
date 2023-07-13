@@ -24,4 +24,13 @@ class UsersController extends A_Controller
     {
         // TODO: Implement addAction() method.
     }
+
+    public function loginAction(): string
+    {
+
+    }
+    public function logoutAction(): string
+    {
+
+    }
 }

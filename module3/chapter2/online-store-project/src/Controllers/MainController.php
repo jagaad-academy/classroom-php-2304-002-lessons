@@ -6,7 +6,8 @@ class MainController extends A_Controller
 {
     public function indexAction(): string
     {
-        // TODO: Implement indexAction() method.
+        $dataToRender = [];
+        $this->view->render('index', $dataToRender);
     }
 
     public function editAction(): void
@@ -22,5 +23,16 @@ class MainController extends A_Controller
     public function addAction(): void
     {
         // TODO: Implement addAction() method.
+    }
+
+    public function pageNotFoundAction()
+    {
+
+    }
+
+    public function prepare(): I_Controller
+    {
+        $this->classNameForViews = str_replace('Controller', '', __CLASS__);
+        $this->actionNameForViews = str_replace('Action', '', __METHOD__);
     }
 }

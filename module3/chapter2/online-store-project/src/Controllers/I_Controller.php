@@ -11,4 +11,6 @@ interface I_Controller
     public function deleteAction(int $id): void; //GET request
 
     public function addAction(): void; //POST request
+
+    public function prepare(): I_Controller;
 }
