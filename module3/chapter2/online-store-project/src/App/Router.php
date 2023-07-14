@@ -20,7 +20,7 @@ class Router
      */
     public static function add(string $route, string $method, string $className, string $actionName): void
     {
-        $indexName = md5($method . $route);
+        $indexName = md5($method . $route); // "get/login"
         if (!array_key_exists($indexName, self::$routes)) {
             self::$routes[$indexName] = [
                 self::ROUTE_LABEL => $route,
@@ -33,19 +33,19 @@ class Router
 
     public static function run(): void
     {
-        $method = $_SERVER['REQUEST_METHOD'];
-        $route = $_SERVER['REQUEST_URI'];
+        $method = strtolower($_SERVER['REQUEST_METHOD']);
+        $route = strtolower($_SERVER['REQUEST_URI']);
 
         $indexName = md5($method . $route);
         if(array_key_exists($indexName, self::$routes)){
             $classNameSpace = self::$routes[$indexName][self::CLASS_NAME];
-            $action = self::$routes[$indexName][self::CLASS_NAME];
+            $action = self::$routes[$indexName][self::ACTION_NAME];
             if(class_exists($classNameSpace)){
                 $object = new $classNameSpace(new View());
                 $object->{$action . "Action"}();
             }
         } else {
-            $mainController = new MainController();
+            $mainController = new MainController(new View());
             $mainController->pageNotFoundAction();
             die;
         }

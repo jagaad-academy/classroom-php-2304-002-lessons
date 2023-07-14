@@ -4,35 +4,29 @@ namespace OnlineStoreProject\Controllers;
 
 class MainController extends A_Controller
 {
-    public function indexAction(): string
+    protected function indexAction(): void
     {
-        $dataToRender = [];
-        $this->view->render('index', $dataToRender);
+        echo $this->view->render('index', $this->dataToRender);
     }
 
-    public function editAction(): void
-    {
-        // TODO: Implement editAction() method.
-    }
-
-    public function deleteAction(int $id): void
-    {
-        // TODO: Implement deleteAction() method.
-    }
-
-    public function addAction(): void
+    protected function editAction(): void
     {
         // TODO: Implement addAction() method.
     }
 
-    public function pageNotFoundAction()
+    protected function deleteAction(int $id): void
     {
-
+        // TODO: Implement addAction() method.
     }
 
-    public function prepare(): I_Controller
+    protected function addAction(): void
     {
-        $this->classNameForViews = str_replace('Controller', '', __CLASS__);
-        $this->actionNameForViews = str_replace('Action', '', __METHOD__);
+        // TODO: Implement addAction() method.
+    }
+
+    protected function pageNotFoundAction(): void
+    {
+        $this->dataToRender["pageTitle"] = 'Page not found!';
+        echo $this->view->render('404', $this->dataToRender);
     }
 }
