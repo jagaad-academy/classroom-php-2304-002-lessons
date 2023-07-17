@@ -1,3 +1,8 @@
 <div class="col">
-    <h1>Hello <?=$data->userName?> <?=$data->userFullName?> !!!</h1>
+    <?php if(!empty($data->users)){
+        foreach ($data->users as $user) {
+            echo $user['email'] . "<br>";
+        }
+    }
+    ?>
 </div>

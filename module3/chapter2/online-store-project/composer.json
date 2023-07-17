@@ -12,5 +12,7 @@
             "email": "hennadii.shvedko@jagaad.com"
         }
     ],
-    "require": {}
+    "require": {
+      "ext-pdo": "*"
+    }
 }

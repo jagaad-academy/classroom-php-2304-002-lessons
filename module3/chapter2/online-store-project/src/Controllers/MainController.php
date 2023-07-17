@@ -2,10 +2,14 @@
 
 namespace OnlineStoreProject\Controllers;
 
+use OnlineStoreProject\Entities\Users;
+
 class MainController extends A_Controller
 {
     protected function indexAction(): void
     {
+        $users = new Users();
+        $this->dataToRender['users'] = $users->findAll();
         echo $this->view->render('index', $this->dataToRender);
     }
 

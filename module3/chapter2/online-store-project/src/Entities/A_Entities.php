@@ -2,25 +2,31 @@
 
 namespace OnlineStoreProject\Entities;
 
-use mysqli;
-
 abstract class A_Entities implements I_Entities
 {
-    /**
-     * @throws \Exception
-     */
+    public static ?\PDO $connection = null;
+
     public function __construct()
     {
-//        $mysqli = new mysqli(
-//            DB_HOST,
-//            DB_USER,
-//            DB_USER_PASS,
-//            DB_NAME
-//        );
-//
-//        // check connection
-//        if ($mysqli->connect_errno) {
-//            throw new \Exception('Failed to connect to MySQL: ' . $mysqli->connect_error);
-//        }
+        if(self::$connection === null){
+            self::$connection = new \PDO("mysql:host=".DB_HOST.";dbname=" . DB_NAME, DB_USER, DB_USER_PASS);
+        }
+    }
+
+    public function deleteById(int $id): bool
+    {
+        $conn = self::$connection;
+        $entity = $this->getEntityName();
+        $stmt = $conn->prepare("DELETE FROM " . $entity::DB_TABLE_NAME . " WHERE id=:id");
+        $stmt->bindParam(":id", $id);
+        $result = $stmt->execute();
+        return $result;
+    }
+
+    private function getEntityName(): string
+    {
+        $classNameSpaceWithName = get_class($this);
+        $className = str_replace('OnlineStoreProject\Entities\\', '', $classNameSpaceWithName);
+        return $className;
     }
 }

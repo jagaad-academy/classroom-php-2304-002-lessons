@@ -2,6 +2,8 @@
 
 namespace OnlineStoreProject\Controllers;
 
+use OnlineStoreProject\Entities\Users;
+
 class UsersController extends A_Controller
 {
 
@@ -17,12 +19,30 @@ class UsersController extends A_Controller
 
     protected function deleteAction(int $id): void
     {
-        // TODO: Implement deleteAction() method.
+        $users = new Users();
+        $result = $users->deleteById($id);
+        if($result === true){
+            //header('Location: /login');
+        } else{
+            $this->dataToRender['error'] = "Deletion failed! Please try one more time!";
+            //echo $this->view->render('registration', $this->dataToRender);
+        }
     }
 
     protected function addAction(): void
     {
-        // TODO: Implement addAction() method.
+        $userData[Users::DB_TABLE_FIELD_EMAIL] = $_POST[Users::DB_TABLE_FIELD_EMAIL];
+        $userData[Users::DB_TABLE_FIELD_PASSWORD] = $_POST[Users::DB_TABLE_FIELD_PASSWORD];
+        $userData[Users::DB_TABLE_FIELD_ADDRESS] = $_POST[Users::DB_TABLE_FIELD_ADDRESS];
+
+        $users = new Users();
+        $result = $users->insert($userData);
+        if($result === true){
+            header('Location: /login');
+        } else {
+            $this->dataToRender['error'] = "Registration failed! Please try one more time!";
+            echo $this->view->render('registration', $this->dataToRender);
+        }
     }
 
     protected function loginAction(): void
