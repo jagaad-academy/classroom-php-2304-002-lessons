@@ -29,6 +29,17 @@ class Users extends A_Entities
         return $result;
     }
 
+    public function findByEmail(string $email): array
+    {
+        $conn = self::$connection;
+        $stmt = $conn->prepare("SELECT * FROM " . self::DB_TABLE_NAME . " WHERE email=:email");
+        $stmt->bindParam(":email", $email);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
     public function findAllById(int $id): array
     {
         // TODO: Implement findAllById() method.

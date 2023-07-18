@@ -12,6 +12,9 @@ class View extends \stdClass
     const PROPERTY_NOT_FOUND_ALERT = "{{PROPERTY NOT FOUND!!!}}";
     private string $actionNameForViews;
     private string $classNameForViews;
+
+    public static string $errorMessage = '';
+
     public function __get($name)
     {
         if(property_exists($this, $name)){

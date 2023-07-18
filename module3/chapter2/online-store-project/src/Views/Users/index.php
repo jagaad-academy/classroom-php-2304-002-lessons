@@ -6,16 +6,9 @@
         </div>
         <?php
     }
-    ?>
-    <?php
-    if(isset($data->success)){ ?>
-        <div class="alert alert-success" role="alert">
-            <?=$data->success?>
-        </div>
-        <?php
-    }
-    ?>
-    <form action="/login" method="post">
+?>
+    <h1>Create your account</h1>
+    <form action="/register" method="post">
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
             <input type="email" class="form-control" id="email" name="email" required aria-describedby="emailHelp">
@@ -25,30 +18,10 @@
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
-        <button type="submit" class="btn btn-primary">Log in</button>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign up</button>
     </form>
 </div>
-
-
-<?php
-
-$var = true;
-if($var) {
-    echo "Variable";
-} else {
-    echo "Fail";
-}
-
-echo $var ? "Variable" : "Fail";
-
-$arr = ['id' => 1];
-
-if(isset($arr['id'])){
-    echo $arr['id'];
-} else {
-    echo "Failed";
-}
-
-echo $arr['id'] ?? "Failed";
-
-?>

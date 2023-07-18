@@ -24,6 +24,13 @@ abstract class A_Controller implements I_Controller
 
     abstract protected function addAction(): void; //POST request
 
+    protected function checkAccess(): void
+    {
+        if(!isset($_SESSION['user']) || empty($_SESSION['user'])){
+            header('Location: /login');
+        }
+    }
+
     public function __call($name, $args)
     {
         if (method_exists($this, $name)) {
