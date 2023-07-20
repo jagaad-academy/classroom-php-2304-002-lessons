@@ -2,14 +2,16 @@
 
 namespace OnlineStoreProject\Entities;
 
+use PDO;
+
 abstract class A_Entities implements I_Entities
 {
     public static ?\PDO $connection = null;
 
     public function __construct()
     {
-        if(self::$connection === null){
-            self::$connection = new \PDO("mysql:host=".DB_HOST.";dbname=" . DB_NAME, DB_USER, DB_USER_PASS);
+        if(!(self::$connection instanceof PDO)){
+            self::$connection = new \PDO(DB_DRIVER . ":host=".DB_HOST.";dbname=" . DB_NAME, DB_USER, DB_USER_PASS);
         }
     }
 
@@ -26,7 +28,20 @@ abstract class A_Entities implements I_Entities
     private function getEntityName(): string
     {
         $classNameSpaceWithName = get_class($this);
-        $className = str_replace('OnlineStoreProject\Entities\\', '', $classNameSpaceWithName);
-        return $className;
+        return $classNameSpaceWithName;
+    }
+
+    public function findAll(): array
+    {
+        $conn = self::$connection;
+        $entity = $this->getEntityName();
+        $stmt = $conn->prepare("SELECT * FROM " . $entity::DB_TABLE_NAME);
+        $result = [];
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            $result[] = $row;
+        }
+
+        return $result;
     }
 }

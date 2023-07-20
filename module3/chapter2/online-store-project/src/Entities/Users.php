@@ -109,18 +109,6 @@ class Users extends A_Entities
         $this->address = $address;
     }
 
-    public function findAll(): array
-    {
-        $conn = self::$connection;
-        $stmt = $conn->prepare("SELECT * FROM " . self::DB_TABLE_NAME);
-        $result = [];
-        $stmt->execute();
-        foreach ($stmt as $row) {
-            $result[] = $row;
-        }
-
-        return $result;
-    }
 
     public function insert(array $values): bool
     {

@@ -19,9 +19,6 @@ Router::add('/register', 'get', $usersControllerNameSpace, 'index');
 Router::add('/register', 'post', $usersControllerNameSpace, 'add');
 Router::add('/cart', 'get', $cartControllerNameSpace, 'index');
 Router::add('/notfound', 'get', $mainControllerNameSpace, 'pageNotFound');
-
-//Chapter 3 PDO has to be added
-//@TODO: adjust Entities in order to communicate with DB
-//@TODO: Handle the requests
+Router::add('/product/{id}', 'get', $productsControllerNameSpace, 'index');
 
 Router::run();

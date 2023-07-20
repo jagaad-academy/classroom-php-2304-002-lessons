@@ -2,11 +2,17 @@
 
 namespace OnlineStoreProject\Controllers;
 
+use OnlineStoreProject\Entities\Products;
+
 class ProductsController extends A_Controller
 {
     protected function indexAction(): void
     {
-        // TODO: Implement indexAction() method.
+//        $id = $this->getRequestParameter('id');
+        $id=1;
+        $product = new Products();
+        $this->dataToRender['product'] = $product->findById($id);
+        echo $this->view->render('index', $this->dataToRender);
     }
 
     protected function editAction(): void

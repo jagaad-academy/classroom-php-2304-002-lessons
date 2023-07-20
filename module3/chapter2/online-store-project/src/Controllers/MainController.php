@@ -2,14 +2,19 @@
 
 namespace OnlineStoreProject\Controllers;
 
+use OnlineStoreProject\Entities\Products;
 use OnlineStoreProject\Entities\Users;
 
 class MainController extends A_Controller
 {
+    const NUMBER_OF_PRODUCTS_ON_THE_MAIN_PAGE = 12;
+
     protected function indexAction(): void
     {
-        $users = new Users();
-        $this->dataToRender['users'] = $users->findAll();
+        $products = new Products();
+        $productList = $products->findAll();
+        $productList = array_slice($productList, 0, self::NUMBER_OF_PRODUCTS_ON_THE_MAIN_PAGE);
+        $this->dataToRender['products'] = $productList;
         echo $this->view->render('index', $this->dataToRender);
     }
 

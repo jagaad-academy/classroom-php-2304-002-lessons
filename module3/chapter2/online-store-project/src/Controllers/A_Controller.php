@@ -55,4 +55,17 @@ abstract class A_Controller implements I_Controller
             }
         }
     }
+
+    protected function getRequestParameter(string $parameter): string
+    {
+        //@TODO: use the rout value from Router class
+        $parameterToReturn = '';
+        $requestUrl = $_SERVER['REQUEST_URI'];
+        $regExp = "^\/(.*)\/({" . $parameter . "})$";
+        if(preg_match($regExp, $requestUrl, $match)){
+            $parameterToReturn = $match[2] ?? '';
+        }
+
+        return $parameterToReturn;
+    }
 }

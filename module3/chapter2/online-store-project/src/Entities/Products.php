@@ -3,15 +3,23 @@ namespace OnlineStoreProject\Entities;
 
 class Products extends A_Entities
 {
+    const DB_TABLE_NAME = 'products';
+
     public int $id;
     public string $name;
     public float $price;
     public string $image;
     public string $description;
 
-    public function findById(int $id): I_Entities
+    public function findById(int $id): array
     {
-        // TODO: Implement findById() method.
+        $conn = self::$connection;
+        $stmt = $conn->prepare("SELECT * FROM " . self::DB_TABLE_NAME . " WHERE id=:id");
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return $result;
     }
 
     public function findAllById(int $id): array
@@ -97,5 +105,10 @@ class Products extends A_Entities
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public function insert(array $values): bool
+    {
+        // TODO: Implement insert() method.
     }
 }

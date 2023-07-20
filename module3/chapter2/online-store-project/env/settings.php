@@ -1,5 +1,6 @@
 <?php
 
+const DB_DRIVER = 'mysql';
 //DB constants
 const DB_HOST = "localhost";
 const DB_NAME = 'online-store';

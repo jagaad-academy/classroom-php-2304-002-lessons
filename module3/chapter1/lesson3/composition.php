@@ -1,5 +1,7 @@
 <?php
 
+use Example;
+
 class Logger
 {
     public function log($message)
@@ -14,8 +16,9 @@ class Logger
     }
 }
 
-class DataMigrator
+class DataMigrator extends Logger
 {
+    public string $test;
     private $logger1;
 
     public function __construct()
