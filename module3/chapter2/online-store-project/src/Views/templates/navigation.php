@@ -28,10 +28,10 @@
                 </li>
             </ul>
             <div class="d-flex">
-                <a href="/shop/cart" class="btn btn-outline-dark" type="submit">
+                <a href="/cart" class="btn btn-outline-dark" type="submit">
                     <i class="bi-cart-fill me-1"></i>
                     Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"><?=$data->cartQuantity?></span>
                 </a>
             </div>
         </div>

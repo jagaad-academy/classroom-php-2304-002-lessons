@@ -3,6 +3,7 @@
 namespace OnlineStoreProject\Controllers;
 
 use OnlineStoreProject\App\View;
+use OnlineStoreProject\Entities\Cart;
 
 abstract class A_Controller implements I_Controller
 {
@@ -14,6 +15,8 @@ abstract class A_Controller implements I_Controller
     {
         $this->view = $view;
         $this->dataToRender["pageTitle"] = "Online shop Jagaad Academy Iteration 2";
+
+        $this->getNumberFromCart();
     }
 
     abstract protected function indexAction(): void; //GET request
@@ -67,5 +70,15 @@ abstract class A_Controller implements I_Controller
         }
 
         return $parameterToReturn;
+    }
+
+    /**
+     * @return void
+     */
+    protected function getNumberFromCart(): void
+    {
+        $cart = new Cart();
+        $numberInCart = count($cart->findAllByUserId($_SESSION['user']['id']));
+        $this->dataToRender['cartQuantity'] = $numberInCart;
     }
 }

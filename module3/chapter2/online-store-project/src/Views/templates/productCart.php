@@ -1,7 +1,7 @@
 <div class="col-3 mb-5">
     <div class="card h-100">
         <!-- Product image-->
-        <img class="card-img-top" src="<?=$product['image']?>?random=1" alt="..." />
+        <img class="card-img-top" src="<?=$product['image']?>?random=<?=rand(100, 1000)?>" alt="..." />
         <!-- Product details-->
         <div class="card-body p-4">
             <div class="text-center">

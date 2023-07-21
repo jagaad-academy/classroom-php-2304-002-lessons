@@ -2,16 +2,20 @@
 
 namespace OnlineStoreProject\Controllers;
 
+use OnlineStoreProject\App\Router;
 use OnlineStoreProject\Entities\Products;
 
 class ProductsController extends A_Controller
 {
     protected function indexAction(): void
     {
-//        $id = $this->getRequestParameter('id');
-        $id=1;
+        $id = Router::$idURLParameter;
         $product = new Products();
-        $this->dataToRender['product'] = $product->findById($id);
+        $productData = $product->findById($id);
+        if(empty($productData)){
+            header('Location: /notfound');
+        }
+        $this->dataToRender['product'] = $productData;
         echo $this->view->render('index', $this->dataToRender);
     }
 

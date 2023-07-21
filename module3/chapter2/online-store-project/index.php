@@ -20,5 +20,6 @@ Router::add('/register', 'post', $usersControllerNameSpace, 'add');
 Router::add('/cart', 'get', $cartControllerNameSpace, 'index');
 Router::add('/notfound', 'get', $mainControllerNameSpace, 'pageNotFound');
 Router::add('/product/{id}', 'get', $productsControllerNameSpace, 'index');
+Router::add('/product/{id}', 'post', $cartControllerNameSpace, 'add');
 
 Router::run();
