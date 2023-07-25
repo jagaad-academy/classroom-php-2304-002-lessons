@@ -15,6 +15,7 @@ class MainController extends A_Controller
         $productList = $products->findAll();
         $productList = array_slice($productList, 0, self::NUMBER_OF_PRODUCTS_ON_THE_MAIN_PAGE);
         $this->dataToRender['products'] = $productList;
+        $this->dataToRender['showBanner'] = true;
         echo $this->view->render('index', $this->dataToRender);
     }
 
@@ -23,7 +24,7 @@ class MainController extends A_Controller
         // TODO: Implement addAction() method.
     }
 
-    protected function deleteAction(int $id): void
+    protected function deleteAction(): void
     {
         // TODO: Implement addAction() method.
     }

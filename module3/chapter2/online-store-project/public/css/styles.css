@@ -10824,3 +10824,7 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+.cart-item-hover:hover{
+  background-color: var(--bs-gray-300);
+}

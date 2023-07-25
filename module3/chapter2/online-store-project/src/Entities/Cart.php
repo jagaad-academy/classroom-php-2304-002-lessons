@@ -1,5 +1,8 @@
 <?php
+
 namespace OnlineStoreProject\Entities;
+
+use mysql_xdevapi\Session;
 
 class Cart extends A_Entities
 {
@@ -136,6 +139,15 @@ class Cart extends A_Entities
         return $result;
     }
 
+    public function updateCartItemAsChekedout(int $id): bool
+    {
+        $conn = self::$connection;
+        $stmt = $conn->prepare("UPDATE " . self::DB_TABLE_NAME . " SET is_payed='1' WHERE id=:id");
+        $stmt->bindParam(":id", $id);
+        $result = $stmt->execute();
+        return $result;
+    }
+
     public function findAllByUserId(int $userId): array
     {
         $conn = self::$connection;
@@ -157,6 +169,16 @@ class Cart extends A_Entities
         foreach ($stmt as $row) {
             $result[] = $row;
         }
+        return $result;
+    }
+
+    public function deleteByProductId(int $id): bool
+    {
+        $conn = self::$connection;
+        $stmt = $conn->prepare("DELETE FROM " . self::DB_TABLE_NAME . " WHERE product_id=:product_id AND user_id=:user_id");
+        $stmt->bindParam(":product_id", $id);
+        $stmt->bindParam(":user_id", $_SESSION['user']['id']);
+        $result = $stmt->execute();
         return $result;
     }
 }

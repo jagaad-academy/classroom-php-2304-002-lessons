@@ -11,6 +11,9 @@ abstract class A_Controller implements I_Controller
 
     protected array $dataToRender = [];
 
+    /**
+     * @param View $view
+     */
     public function __construct(View $view)
     {
         $this->view = $view;
@@ -23,13 +26,13 @@ abstract class A_Controller implements I_Controller
 
     abstract protected function editAction(): void; //POST request
 
-    abstract protected function deleteAction(int $id): void; //GET request
+    abstract protected function deleteAction(): void; //GET request
 
     abstract protected function addAction(): void; //POST request
 
     protected function checkAccess(): void
     {
-        if(!isset($_SESSION['user']) || empty($_SESSION['user'])){
+        if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
             header('Location: /login');
         }
     }
@@ -37,7 +40,7 @@ abstract class A_Controller implements I_Controller
     public function __call($name, $args)
     {
         if (method_exists($this, $name)) {
-            //Input data validation
+//Input data validation
             $this->validateInputs();
 
             $this->view->setActionNameForViews(str_replace('Action', '', $name));
@@ -50,7 +53,7 @@ abstract class A_Controller implements I_Controller
 
     private function validateInputs(): void
     {
-        if(!empty($_POST)){
+        if (!empty($_POST)) {
             foreach ($_POST as $key => $value) {
                 $value = filter_input(INPUT_POST, $key, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 $value = htmlspecialchars($value);
@@ -65,7 +68,7 @@ abstract class A_Controller implements I_Controller
         $parameterToReturn = '';
         $requestUrl = $_SERVER['REQUEST_URI'];
         $regExp = "^\/(.*)\/({" . $parameter . "})$";
-        if(preg_match($regExp, $requestUrl, $match)){
+        if (preg_match($regExp, $requestUrl, $match)) {
             $parameterToReturn = $match[2] ?? '';
         }
 
@@ -78,7 +81,7 @@ abstract class A_Controller implements I_Controller
     protected function getNumberFromCart(): void
     {
         $cart = new Cart();
-        $numberInCart = count($cart->findAllByUserId($_SESSION['user']['id']));
+        $numberInCart = count($cart->findAllByUserId($_SESSION['user']['id'] ?? 0));
         $this->dataToRender['cartQuantity'] = $numberInCart;
     }
 }

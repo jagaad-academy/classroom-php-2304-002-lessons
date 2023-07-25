@@ -28,27 +28,3 @@
         <button type="submit" class="btn btn-primary">Log in</button>
     </form>
 </div>
-
-
-<?php
-
-$var = true;
-if($var) {
-    echo "Variable";
-} else {
-    echo "Fail";
-}
-
-echo $var ? "Variable" : "Fail";
-
-$arr = ['id' => 1];
-
-if(isset($arr['id'])){
-    echo $arr['id'];
-} else {
-    echo "Failed";
-}
-
-echo $arr['id'] ?? "Failed";
-
-?>

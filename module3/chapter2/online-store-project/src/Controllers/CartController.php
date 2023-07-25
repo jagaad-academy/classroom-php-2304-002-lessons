@@ -24,9 +24,19 @@ class CartController extends A_Controller
         // TODO: Implement editAction() method.
     }
 
-    protected function deleteAction(int $id): void
+    protected function deleteAction(): void
     {
-        // TODO: Implement deleteAction() method.
+        $this->checkAccess();
+        $id = Router::$idURLParameter;
+        $cart = new Cart();
+        $result = $cart->deleteByProductId($id);
+        if($result === true){
+            $this->dataToRender['success'] = "Product has been deleted from cart.";
+        } else{
+            $this->dataToRender['error'] = "Deletion failed! Please try one more time!";
+        }
+        header('Location: /cart');
+
     }
 
     protected function addAction(): void
@@ -52,5 +62,32 @@ class CartController extends A_Controller
 
         $this->dataToRender['product'] = $productData;
         echo $this->view->render('index', $this->dataToRender);
+    }
+
+    protected function checkoutAction(): void
+    {
+        $result = true;
+        $this->checkAccess();
+        $cart = new Cart();
+        $cartItems = $cart->findAllByUserId($_SESSION['user']['id']);
+        if(!empty($cartItems)){
+            foreach ($cartItems as $item){
+                $cartId = $item['id'];
+                $result &= $cart->updateCartItemAsChekedout($cartId);
+            }
+        }
+
+        if($result){
+            header("Location: /thankyou");
+        } else {
+            $this->dataToRender['error'] = "Something went wrong upon checkout. Please try again.";
+            header("Location: /cart");
+        }
+    }
+
+    protected function thankyouAction(): void
+    {
+        $this->checkAccess();
+        echo $this->view->render('thankyouPage', $this->dataToRender);
     }
 }

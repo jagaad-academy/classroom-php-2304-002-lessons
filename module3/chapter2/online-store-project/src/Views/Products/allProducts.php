@@ -14,9 +14,19 @@
     </div>
 <?php
 }
-require_once __DIR__ . "/productPage.php";
     ?>
 </div>
 <div class="col-12">
-<?php require_once __DIR__ . "/moreProducts.php"; ?>
+
+<?php
+    if(count($data->products) > 0) {
+        ?>
+    <div class="row">
+    <?php
+        foreach ($data->products as $product) {
+            require __DIR__ . "/../templates/productCart.php";
+        }
+    }
+    ?>
+    </div>
 </div>

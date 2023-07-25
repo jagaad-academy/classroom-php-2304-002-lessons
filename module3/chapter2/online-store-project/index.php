@@ -18,7 +18,11 @@ Router::add('/logout', 'get', $usersControllerNameSpace, 'logout');
 Router::add('/register', 'get', $usersControllerNameSpace, 'index');
 Router::add('/register', 'post', $usersControllerNameSpace, 'add');
 Router::add('/cart', 'get', $cartControllerNameSpace, 'index');
+Router::add('/cart/remove/{id}', 'get', $cartControllerNameSpace, 'delete');
+Router::add('/checkout', 'get', $cartControllerNameSpace, 'checkout');
+Router::add('/thankyou', 'get', $cartControllerNameSpace, 'thankyou');
 Router::add('/notfound', 'get', $mainControllerNameSpace, 'pageNotFound');
+Router::add('/products/all', 'get', $productsControllerNameSpace, 'allProducts');
 Router::add('/product/{id}', 'get', $productsControllerNameSpace, 'index');
 Router::add('/product/{id}', 'post', $cartControllerNameSpace, 'add');
 

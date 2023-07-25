@@ -111,4 +111,14 @@ class Products extends A_Entities
     {
         // TODO: Implement insert() method.
     }
+
+    public function findMaximalId(): int
+    {
+        $conn = self::$connection;
+        $stmt = $conn->prepare("SELECT MAX(id) as id FROM " . self::DB_TABLE_NAME);
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return $result['id'];
+    }
 }
