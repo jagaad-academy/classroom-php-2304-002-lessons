@@ -10,9 +10,7 @@ class UsersController extends A_Controller
 
     protected function indexAction(): void
     {
-        if (!empty($_SESSION['user'])) {
-            header('Location: /');
-        }
+        $this->checkAccess();
         echo $this->view->render('index', $this->dataToRender);
     }
 
@@ -23,26 +21,16 @@ class UsersController extends A_Controller
 
     protected function deleteAction(): void
     {
-        $this->checkAccess();
-        $id = Router::$idURLParameter;
-        $users = new Users();
-        $result = $users->deleteById($id);
-        if ($result === true) {
-//header('Location: /login');
-        } else {
-            $this->dataToRender['error'] = "Deletion failed! Please try one more time!";
-//echo $this->view->render('registration', $this->dataToRender);
-        }
+        //@TODO: implement deleteAction() method.
     }
 
     protected function addAction(): void
     {
         $this->checkAccess();
 
-        if ($userData[Users::DB_TABLE_FIELD_EMAIL] = filter_var($_POST[Users::DB_TABLE_FIELD_EMAIL], FILTER_VALIDATE_EMAIL)) {
-            $userData[Users::DB_TABLE_FIELD_PASSWORD] = htmlentities($_POST[Users::DB_TABLE_FIELD_PASSWORD]);
-            $userData[Users::DB_TABLE_FIELD_ADDRESS] = htmlentities($_POST[Users::DB_TABLE_FIELD_ADDRESS]);
-            $userData[Users::DB_TABLE_FIELD_PASSWORD] = password_hash($userData[Users::DB_TABLE_FIELD_PASSWORD], PASSWORD_DEFAULT);
+        $userData = $this->validateAndAssignUserData();
+
+        if (!empty($userData)) {
             $users = new Users();
             $result = $users->insert($userData);
             if ($result === true) {
@@ -74,36 +62,16 @@ class UsersController extends A_Controller
 
     protected function authenticateAction(): void
     {
-        $userExists = false;
-        $userData = [];
-
         $_SESSION['userLoginFailed'] = false;
-        if ($userEmail = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            $user = new Users();
-            $userData = $user->findByEmail($userEmail);
-            if (empty($userData)) {
-                $_SESSION['errorMessage'] = "There is no user with such email!";
-                header('Location: /login');
-            } else {
-                if (!password_verify($_POST['password'], $userData['password'])) {
-                    $_SESSION['errorMessage'] = "The combination of email and password is not exist!";
-                    header('Location: /login');
-                } else {
-                    $userExists = true;
-                }
-            }
-        } else {
-            $_SESSION['errorMessage'] = "Please put a real email!";
+        $userEmail = $this->getUserEmailOrRedirectToLoginPage();
+        $user = new Users();
+        $userData = $user->findByEmail($userEmail);
+        if (empty($userData)) {
+            $_SESSION['errorMessage'] = "There is no user with such email!";
             header('Location: /login');
-        }
-        if ($userExists) {
-            $_SESSION['user'] = $userData;
-            header('Location: /');
         } else {
-            $_SESSION['userLoginFailed'] = true;
-            header('Location: /login');
+            $this->verifyPasswordAndRedirect($userData);
         }
-
     }
 
     protected function logoutAction(): void
@@ -111,5 +79,42 @@ class UsersController extends A_Controller
         unset($_SESSION['user']);
         session_destroy();
         header('Location: /login');
+    }
+
+    private function validateAndAssignUserData(): array
+    {
+        $userData = [];
+        if ($userData[Users::DB_TABLE_FIELD_EMAIL] = filter_var($_POST[Users::DB_TABLE_FIELD_EMAIL], FILTER_VALIDATE_EMAIL)) {
+            $userData[Users::DB_TABLE_FIELD_PASSWORD] = htmlentities($_POST[Users::DB_TABLE_FIELD_PASSWORD]);
+            $userData[Users::DB_TABLE_FIELD_ADDRESS] = htmlentities($_POST[Users::DB_TABLE_FIELD_ADDRESS]);
+            $userData[Users::DB_TABLE_FIELD_PASSWORD] = password_hash($userData[Users::DB_TABLE_FIELD_PASSWORD], PASSWORD_DEFAULT);
+        }
+
+        return $userData;
+    }
+
+    /**
+     * @param array $userData
+     * @return void
+     */
+    private function verifyPasswordAndRedirect(array $userData): void
+    {
+        if (!password_verify($_POST['password'], $userData['password'])) {
+            $_SESSION['errorMessage'] = "The combination of email and password is not exist!";
+            header('Location: /login');
+        } else {
+            $_SESSION['user'] = $userData;
+            header('Location: /');
+        }
+    }
+
+    private function getUserEmailOrRedirectToLoginPage(): string
+    {
+        $userEmail = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+        if (!$userEmail) {
+            $_SESSION['errorMessage'] = "Please put a real email!";
+            header('Location: /login');
+        }
+        return $userEmail;
     }
 }

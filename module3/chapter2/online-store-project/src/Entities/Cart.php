@@ -2,8 +2,6 @@
 
 namespace OnlineStoreProject\Entities;
 
-use mysql_xdevapi\Session;
-
 class Cart extends A_Entities
 {
     const DB_TABLE_NAME = 'cart';

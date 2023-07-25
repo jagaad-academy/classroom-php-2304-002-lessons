@@ -78,8 +78,28 @@ class Router
         $classNameSpace = self::$routes[$indexName][self::CLASS_NAME];
         $action = self::$routes[$indexName][self::ACTION_NAME];
         if (class_exists($classNameSpace)) {
-            $object = new $classNameSpace(new View());
+            $viewObject = self::getViewObject();
+            $object = new $classNameSpace($viewObject);
             $object->{$action . "Action"}();
         }
+    }
+
+    /**
+     * @return View
+     */
+    private static function getViewObject(): View
+    {
+        $view = NATIVE;
+        foreach (LIST_OF_TEMPLATE_ENGINES as $nameOfTemplateEngine => $templateEngineIsActive) {
+            if ($templateEngineIsActive) {
+                $view = $nameOfTemplateEngine;
+            }
+        }
+
+        $viewObject = match ($view) {
+            TWIG => new ViewTwig(),
+            default => new View(),
+        };
+        return $viewObject;
     }
 }

@@ -7,7 +7,7 @@ class PaymentMethods extends A_Entities
     public string $name;
     public bool $isActive;
 
-    public function findById(int $id): I_Entities
+    public function findById(int $id): array
     {
         // TODO: Implement findById() method.
     }
@@ -63,5 +63,10 @@ class PaymentMethods extends A_Entities
     public function setIsActive(bool $isActive): void
     {
         $this->isActive = $isActive;
+    }
+
+    public function insert(array $values): bool
+    {
+        // TODO: Implement insert() method.
     }
 }

@@ -40,7 +40,7 @@ abstract class A_Controller implements I_Controller
     public function __call($name, $args)
     {
         if (method_exists($this, $name)) {
-//Input data validation
+            //Input data validation
             $this->validateInputs();
 
             $this->view->setActionNameForViews(str_replace('Action', '', $name));
@@ -60,19 +60,6 @@ abstract class A_Controller implements I_Controller
                 $_POST[$key] = $value;
             }
         }
-    }
-
-    protected function getRequestParameter(string $parameter): string
-    {
-        //@TODO: use the rout value from Router class
-        $parameterToReturn = '';
-        $requestUrl = $_SERVER['REQUEST_URI'];
-        $regExp = "^\/(.*)\/({" . $parameter . "})$";
-        if (preg_match($regExp, $requestUrl, $match)) {
-            $parameterToReturn = $match[2] ?? '';
-        }
-
-        return $parameterToReturn;
     }
 
     /**
