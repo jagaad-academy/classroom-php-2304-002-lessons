@@ -1,0 +1,22 @@
+{
+    "name": "jagaad/module4",
+    "description": "Test project of module 4 chapter 1 lesson 1",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Jagaad\\Module4\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "h-shvedko",
+            "email": "hennadii.shvedko@jagaad.com"
+        }
+    ],
+    "require": {
+        "endroid/qrcode": "^4.8",
+        "monolog/monolog": "^3.4",
+        "symfony/routing": "^6.3",
+        "symfony/http-foundation": "^6.3"
+    }
+}
