@@ -17,9 +17,9 @@ class Router
     public static int $idURLParameter = 0;
 
     /**
-     * @param string $route
-     * @param string $className
-     * @param string $actionName
+     * @param  string $route
+     * @param  string $className
+     * @param  string $actionName
      * @return void
      */
     public static function add(string $route, string $method, string $className, string $actionName): void
@@ -54,7 +54,7 @@ class Router
                     if ($id != 0) {
                         $routeReplaced = str_replace($id, '(.*)', $route);
                         $indexToCheck = md5($method . $routeReplaced);
-                        if($indexToCheck == $index){
+                        if($indexToCheck == $index) {
                             self::$idURLParameter = $id;
                             self::callControllerWithAction($index);
                             return;
@@ -70,7 +70,7 @@ class Router
     }
 
     /**
-     * @param string $indexName
+     * @param  string $indexName
      * @return void
      */
     private static function callControllerWithAction(string $indexName): void

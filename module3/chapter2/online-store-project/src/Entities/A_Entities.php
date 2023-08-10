@@ -20,7 +20,8 @@ abstract class A_Entities implements I_Entities
 
     /**
      * Deleting an item from object by unique identifier (id)
-     * @param int $id - unique identifier of object
+     *
+     * @param  int $id - unique identifier of object
      * @return bool - return TRUE if success, FALSE if failed
      */
     public function deleteById(int $id): bool

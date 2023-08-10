@@ -2,5 +2,5 @@
 
 ?>
 
-<div><?=$data->userName; ?></div>
-<div><?=$data->userEmail; ?></div>
+<div><?php echo $data->userName; ?></div>
+<div><?php echo $data->userEmail; ?></div>

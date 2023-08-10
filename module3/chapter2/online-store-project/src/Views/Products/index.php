@@ -2,19 +2,19 @@
     <?php
     if (isset($data->error)) { ?>
         <div class="alert alert-danger" role="alert">
-            <?= $data->error ?>
+            <?php echo $data->error ?>
         </div>
         <?php
     }
     ?>
     <?php
-    if (isset($data->success)){ ?>
+    if (isset($data->success)) { ?>
     <div class="alert alert-success" role="alert">
-        <?= $data->success ?>
+        <?php echo $data->success ?>
     </div>
-<?php
-}
-require_once __DIR__ . "/productPage.php";
+        <?php
+    }
+    require_once __DIR__ . "/productPage.php";
     ?>
 </div>
 <div class="col-12">

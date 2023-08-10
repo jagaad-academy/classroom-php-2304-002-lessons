@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Declaration of class
+ */
+
 namespace Jagaad\Module4;
 
 use Endroid\QrCode\Builder\Builder;
@@ -10,10 +14,17 @@ use Endroid\QrCode\Label\Font\NotoSans;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\Writer\PngWriter;
 
+/**
+ * Class for generation of QRCodes
+ */
 class QrCode
 {
-
-    public function renderCode(): void
+    /**
+     *
+     *
+     * @phpstan-ignore-next-line
+     */
+    public function renderCode()
     {
         $result = Builder::create()
             ->writer(new PngWriter())
@@ -38,6 +49,9 @@ class QrCode
         echo $result->getString();
     }
 
+    /**
+     * @return void
+     */
     public function index(): void
     {
         echo "Test of Symfony Routing!";

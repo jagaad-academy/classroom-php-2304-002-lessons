@@ -1,12 +1,12 @@
 <div class="offset-2 col-6">
     <?php
-    if(isset($data->error)){ ?>
+    if(isset($data->error)) { ?>
         <div class="alert alert-danger" role="alert">
-            <?=$data->error?>
+            <?php echo $data->error?>
         </div>
         <?php
     }
-?>
+    ?>
     <h1>Create your account</h1>
     <form action="/register" method="post">
         <div class="mb-3">

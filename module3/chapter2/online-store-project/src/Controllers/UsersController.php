@@ -16,7 +16,7 @@ class UsersController extends A_Controller
 
     protected function editAction(): void
     {
-// TODO: Implement editAction() method.
+        // TODO: Implement editAction() method.
     }
 
     protected function deleteAction(): void
@@ -94,7 +94,7 @@ class UsersController extends A_Controller
     }
 
     /**
-     * @param array $userData
+     * @param  array $userData
      * @return void
      */
     private function verifyPasswordAndRedirect(array $userData): void

@@ -10,7 +10,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-                <?php if(!empty($_SESSION['user'])){
+                <?php if(!empty($_SESSION['user'])) {
                     echo '<li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>';
                 } else {
                     echo '<li class="nav-item"><a class="nav-link" href="/login">Log in</a></li>';
@@ -31,7 +31,7 @@
                 <a href="/cart" class="btn btn-outline-dark" type="submit">
                     <i class="bi-cart-fill me-1"></i>
                     Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill"><?=$data->cartQuantity?></span>
+                    <span class="badge bg-dark text-white ms-1 rounded-pill"><?php echo $data->cartQuantity?></span>
                 </a>
             </div>
         </div>

@@ -18,7 +18,7 @@ class View extends \stdClass
 
     public function __get($name)
     {
-        if(property_exists($this, $name)){
+        if(property_exists($this, $name)) {
             return $this->{$name};
         } else {
             return self::PROPERTY_NOT_FOUND_ALERT;
@@ -84,28 +84,28 @@ class View extends \stdClass
     {
         $data = $this;
         ob_start();
-        require_once __DIR__ . self::VIEWS_TEMPLATES_HEAD_PHP;
-        require_once __DIR__ . self::VIEWS_TEMPLATES_NAVIGATION_PHP;
+        include_once __DIR__ . self::VIEWS_TEMPLATES_HEAD_PHP;
+        include_once __DIR__ . self::VIEWS_TEMPLATES_NAVIGATION_PHP;
         if ($this->showBanner === true) {
-            require_once __DIR__ . self::VIEWS_TEMPLATES_BANNER_PHP;
+            include_once __DIR__ . self::VIEWS_TEMPLATES_BANNER_PHP;
         } else {
-            require_once __DIR__ . self::VIEWS_TEMPLATES_BANNER_SMALL_PHP;
+            include_once __DIR__ . self::VIEWS_TEMPLATES_BANNER_SMALL_PHP;
         }
-        require_once __DIR__ . self::VIEWS_TEMPLATES_CONTAINER_PHP;
+        include_once __DIR__ . self::VIEWS_TEMPLATES_CONTAINER_PHP;
         $header = ob_get_contents();
         ob_end_clean();
         return $header;
     }
 
     /**
-     * @param string $fileNameWithFullPath
+     * @param  string $fileNameWithFullPath
      * @return false|string
      */
     private function getContentHtml(string $fileNameWithFullPath): string|false
     {
         $data = $this;
         ob_start();
-        require_once $fileNameWithFullPath;
+        include_once $fileNameWithFullPath;
         $content = ob_get_contents();
         ob_end_clean();
         return $content;
@@ -118,15 +118,15 @@ class View extends \stdClass
     {
         $data = $this;
         ob_start();
-        require_once __DIR__ . self::VIEWS_TEMPLATES_FOOTER_PHP;
+        include_once __DIR__ . self::VIEWS_TEMPLATES_FOOTER_PHP;
         $footer = ob_get_contents();
         ob_end_clean();
         return $footer;
     }
 
     /**
-     * @param false|string $content
-     * @param false|string $header
+     * @param  false|string $content
+     * @param  false|string $header
      * @return array|false|string|string[]
      */
     private function replacePLaceHolderWithContent(false|string $content, false|string $header): string|array|false

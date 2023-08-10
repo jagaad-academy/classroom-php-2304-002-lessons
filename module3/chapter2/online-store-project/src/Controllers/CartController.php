@@ -30,7 +30,7 @@ class CartController extends A_Controller
         $id = Router::$idURLParameter;
         $cart = new Cart();
         $result = $cart->deleteByProductId($id);
-        if($result === true){
+        if($result === true) {
             $this->dataToRender['success'] = "Product has been deleted from cart.";
         } else{
             $this->dataToRender['error'] = "Deletion failed! Please try one more time!";
@@ -45,7 +45,7 @@ class CartController extends A_Controller
         $cardData[Cart::DB_TABLE_FIELD_PRODUCT] = (int)(htmlentities($_POST['productId']));
         $product = new Products();
         $productData = $product->findById($cardData[Cart::DB_TABLE_FIELD_PRODUCT]);
-        if(empty($productData)){
+        if(empty($productData)) {
             header('Location: /notfound');
         }
 
@@ -53,7 +53,7 @@ class CartController extends A_Controller
         $cardData[Cart::DB_TABLE_FIELD_USERID] = $_SESSION['user']['id'];
         $cart = new Cart();
         $result = $cart->insert($cardData);
-        if($result === true){
+        if($result === true) {
             $this->dataToRender['success'] = "Product has been added to your cart.";
             $this->getNumberFromCart();
         } else {
@@ -70,14 +70,14 @@ class CartController extends A_Controller
         $this->checkAccess();
         $cart = new Cart();
         $cartItems = $cart->findAllByUserId($_SESSION['user']['id']);
-        if(!empty($cartItems)){
+        if(!empty($cartItems)) {
             foreach ($cartItems as $item){
                 $cartId = $item['id'];
                 $result &= $cart->updateCartItemAsChekedout($cartId);
             }
         }
 
-        if($result){
+        if($result) {
             header("Location: /thankyou");
         } else {
             $this->dataToRender['error'] = "Something went wrong upon checkout. Please try again.";

@@ -12,11 +12,11 @@ class ProductsController extends A_Controller
         $id = Router::$idURLParameter;
         $product = new Products();
         $productData = $product->findById($id);
-        if(empty($productData)){
+        if(empty($productData)) {
             header('Location: /notfound');
         }
         $this->dataToRender['product'] = $productData;
-//        $this->dataToRender['products'] = $this->getRandomProducts(4);
+        //        $this->dataToRender['products'] = $this->getRandomProducts(4);
         $this->dataToRender['products'] = $this->getRandomProductsShuffle(4);
         echo $this->view->render('index', $this->dataToRender);
     }
@@ -50,7 +50,7 @@ class ProductsController extends A_Controller
         $product = new Products();
         $maxId = $product->findMaximalId();
         for($i = 0; $i < $numberOfProducts; $i++){
-            $randomId = rand(1,$maxId);
+            $randomId = rand(1, $maxId);
             $products[] = $product->findById($randomId);
         }
 
