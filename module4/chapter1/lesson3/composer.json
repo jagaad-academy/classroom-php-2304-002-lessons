@@ -1,0 +1,15 @@
+{
+    "name": "hennadii.shvedko/lesson3",
+    "type": "project",
+    "authors": [
+        {
+            "name": "h-shvedko",
+            "email": "shved1982@mail.ru"
+        }
+    ],
+    "require": {
+        "league/flysystem": "^3.0",
+        "league/flysystem-ftp": "^3.0",
+        "league/flysystem-ziparchive": "^3.15"
+    }
+}
