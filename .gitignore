@@ -5,3 +5,10 @@ mysql-data
 /module4/chapter1/lesson1/vendor
 /module3/chapter2/online-store-project/vendor
 /module4/chapter1/lesson3/vendor
+
+/vendor/
+/module4/chapter1/lesson4/dotenv/vendor
+/module4/chapter1/lesson4/email-validator/vendor
+/module4/chapter1/lesson4/faker/vendor
+/module4/chapter1/lesson4/image/vendor
+/module4/chapter2/lesson1/vendor

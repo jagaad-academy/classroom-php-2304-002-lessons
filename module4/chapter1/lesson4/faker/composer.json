@@ -1,0 +1,18 @@
+{
+    "name": "hennadii.shvedko/faker",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "HennadiiShvedko\\Faker\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hennadii Shvedko",
+            "email": "hennadii.shvedko@jagaad.com"
+        }
+    ],
+    "require": {
+        "fzaninotto/faker": "^1.5"
+    }
+}

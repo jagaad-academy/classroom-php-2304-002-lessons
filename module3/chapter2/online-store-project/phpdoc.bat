@@ -1,0 +1,1 @@
+php phpDocumentor.phar run -d "C:\Hennadii Shvedko Documents\Jagaad\Courses\2 iteration\classroom-code\classroom-php-2304-002-lessons\module3\chapter2\online-store-project\src" -t "C:\Hennadii Shvedko Documents\Jagaad\Courses\2 iteration\classroom-code\classroom-php-2304-002-lessons\module3\chapter2\online-store-project\docs"

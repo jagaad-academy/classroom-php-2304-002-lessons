@@ -1,0 +1,19 @@
+{
+    "name": "hennadii.shvedko/lesson1",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "HennadiiShvedko\\Lesson1\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hennadii Shvedko",
+            "email": "hennadii.shvedko@jagaad.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5",
+        "fzaninotto/faker": "^1.5"
+    }
+}

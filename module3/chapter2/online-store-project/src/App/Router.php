@@ -1,9 +1,15 @@
 <?php
+/**
+ * Simple router class
+ */
 
 namespace OnlineStoreProject\App;
 
 use OnlineStoreProject\Controllers\MainController;
 
+/**
+ * Simple router class definition
+ */
 class Router
 {
     const ROUTE_LABEL = 'route';
@@ -17,15 +23,16 @@ class Router
     public static int $idURLParameter = 0;
 
     /**
-     * @param  string $route
-     * @param  string $className
-     * @param  string $actionName
+     * @param string $route
+     * @param string $method
+     * @param string $className
+     * @param string $actionName
      * @return void
      */
     public static function add(string $route, string $method, string $className, string $actionName): void
     {
-        $route = str_replace('{id}', '(.*)', $route);
-        $indexName = md5($method . $route);
+        $route = str_replace('{id}', '(.*)', $route); // /cart/remove/{id} -> /cart/remove/(.*)
+        $indexName = md5($method . $route); // get/cart/remove/(.*) -> md5("get/cart/remove/(.*)") -> Router index
         if (!array_key_exists($indexName, self::$routes)) {
             self::$routes[$indexName] = [
                 self::ROUTE_LABEL => $route,
@@ -38,8 +45,8 @@ class Router
 
     public static function run(): void
     {
-        $method = strtolower($_SERVER['REQUEST_METHOD']);
-        $route = strtolower($_SERVER['REQUEST_URI']);
+        $method = strtolower($_SERVER['REQUEST_METHOD']); // get/post/put/patch.....
+        $route = strtolower($_SERVER['REQUEST_URI']); // /cart/remove/513 <-> /cart/remove/(.*)
 
         $indexName = md5($method . $route);
         if (array_key_exists($indexName, self::$routes)) {
@@ -52,7 +59,8 @@ class Router
                     $id = $matches[1][0] ?? 0;
                     $id = (int)$id;
                     if ($id != 0) {
-                        $routeReplaced = str_replace($id, '(.*)', $route);
+                        $routeReplaced = str_replace($id, '(.*)', $route); // $id = 513 -> (.*)
+                        // $routeReplaced -> /cart/remove/(.*)
                         $indexToCheck = md5($method . $routeReplaced);
                         if($indexToCheck == $index) {
                             self::$idURLParameter = $id;
@@ -62,11 +70,11 @@ class Router
                     }
                 }
             }
-
-            $mainController = new MainController(new View());
-            $mainController->pageNotFoundAction();
-            die;
         }
+
+        $mainController = new MainController(new View());
+        $mainController->pageNotFoundAction();
+        die;
     }
 
     /**
@@ -79,8 +87,9 @@ class Router
         $action = self::$routes[$indexName][self::ACTION_NAME];
         if (class_exists($classNameSpace)) {
             $viewObject = self::getViewObject();
-            $object = new $classNameSpace($viewObject);
-            $object->{$action . "Action"}();
+            $object = new $classNameSpace($viewObject); // new OnlineStore\Controllers\MainController($viewObject)
+            $object->{$action . "Action"}(); // $object->indexAction() -> VALID
+            //$object->$action . "Action"(); // $object->index . Action() -> INVALID
         }
     }
 
