@@ -25,7 +25,7 @@ class Authors extends A_Model
         // TODO: Implement update() method.
     }
 
-    function insert(): bool
+    function insert(array $data): int
     {
         // TODO: Implement insert() method.
     }

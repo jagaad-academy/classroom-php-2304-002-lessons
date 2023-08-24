@@ -24,7 +24,7 @@ abstract class A_Controller
     }
 
     abstract function indexAction(): Response;
-    abstract function updateAction(): bool;
-    abstract function insertAction(): bool;
-    abstract function deleteAction(): bool;
+    abstract function updateAction(int $id): Response;
+    abstract function insertAction(): Response;
+    abstract function deleteAction(int $id): Response;
 }

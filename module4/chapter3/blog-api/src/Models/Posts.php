@@ -2,6 +2,7 @@
 
 namespace BlogApi\Models;
 
+use BlogApi\App\App;
 use Exception;
 use Faker\Factory;
 use PDO;
@@ -32,11 +33,29 @@ class Posts extends A_Model
 
     function update(int $id): bool
     {
-        // TODO: Implement update() method.
+        $sql = "UPDATE " . $this->dbTableName . " SET title=?, author_id=?, image=?, content=? WHERE id=?";
+        $data = App::getDataFromStream();
+        $title = filter_var($data['title'], FILTER_SANITIZE_SPECIAL_CHARS | FILTER_SANITIZE_STRING);
+        $authorId = filter_var($data['authorId'], FILTER_SANITIZE_NUMBER_INT);
+        $img = filter_var($data['image'], FILTER_SANITIZE_SPECIAL_CHARS | FILTER_SANITIZE_STRING);
+        $content = filter_var($data['content'], FILTER_SANITIZE_SPECIAL_CHARS | FILTER_SANITIZE_STRING);
+
+        try {
+            $stm = $this->getPdo()->prepare($sql);
+            $stm->execute([$title, $authorId, $img, $content, $id]);
+
+        } catch (\PDOException $exception){
+            return false;
+        }
+        return true;
     }
 
-    function insert(): bool
+    function insert(array $data): int
     {
+        $sql = "INSERT INTO " . $this->dbTableName . " (title, author_id, image, content) VALUES (?,?,?,?)";
+        $stm = $this->getPdo()->prepare($sql);
+        $stm->execute([$data[0], $data[1], $data[2], $data[3]]);
+        return $this->getPdo()->lastInsertId();
     }
 
     function insertWithData(array $data): void
@@ -48,7 +67,15 @@ class Posts extends A_Model
 
     function delete(int $id): bool
     {
-        // TODO: Implement delete() method.
+        $sql = "DELETE FROM " .$this->dbTableName . " WHERE id=?";
+        try {
+            $stm = $this->getPdo()->prepare($sql);
+            $stm->execute([$id]);
+        } catch (\PDOException $exception){
+            return false;
+        }
+
+        return true;
     }
 
     function fakeData(): bool
@@ -78,4 +105,5 @@ class Posts extends A_Model
 
         return true;
     }
+
 }

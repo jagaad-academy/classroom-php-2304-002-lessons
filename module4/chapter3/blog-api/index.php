@@ -19,27 +19,19 @@ $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
 $router = new League\Route\Router;
 
 // map a route
-$router->map('GET', '/posts', function (ServerRequestInterface $request): ResponseInterface {
-    $response = new Laminas\Diactoros\Response;
+$router->map('GET', '/v1/posts', [new BlogApi\Controllers\PostsController, 'indexAction']);
+$router->map('POST', '/v1/posts', [new BlogApi\Controllers\PostsController, 'insertAction']);
+$router->map('PUT', '/v1/posts/{id}', function (ServerRequestInterface $request, array $args): ResponseInterface {
     $postsController = new PostsController();
-    $postsJson = $postsController->indexAction();
-    $response->getBody()->write($postsJson);
+    $response = $postsController->updateAction((int)$args['id']);
     return $response;
 });
-
-$router->get('/posts-test', [new BlogApi\Controllers\PostsController, 'indexAction']);
-
-//$faker = Factory::create('de_DE');
-//$test = $faker->bankAccountNumber;
-//var_dump($test);
-
-$router->map('GET', '/posts/faker', function (ServerRequestInterface $request): ResponseInterface {
-    $response = new Laminas\Diactoros\Response;
+$router->map('DELETE', '/v1/posts/{id}', function (ServerRequestInterface $request, array $args): ResponseInterface {
     $postsController = new PostsController();
-    $postsJson = $postsController->faker();
-    $response->getBody()->write($postsJson);
+    $response = $postsController->deleteAction((int)$args['id']);
     return $response;
 });
+//$router->map('GET', '/posts/faker', [new BlogApi\Controllers\PostsController, 'faker']);
 
 $response = $router->dispatch($request);
 
