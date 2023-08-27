@@ -1,0 +1,18 @@
+{
+    "name": "hennadii.shvedko/lesson4",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "PHPUnitLesson\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hennadii Shvedko",
+            "email": "hennadii.shvedko@jagaad.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^10"
+    }
+}

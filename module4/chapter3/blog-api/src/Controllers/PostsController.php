@@ -6,6 +6,15 @@ use BlogApi\Models\Posts;
 use Laminas\Diactoros\Response;
 use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(
+ *   title="Blog API",
+ *   version="1.0.0",
+ *   @OA\Contact(
+ *     email="hennadii.shvedko@jagaad.com"
+ *   )
+ * )
+ */
 class PostsController extends A_Controller
 {
     /**
@@ -15,9 +24,6 @@ class PostsController extends A_Controller
      *     @OA\Response(
      *          response=200,
      *          description="posts response",
-     *          @OA\JsonContent(
-     *              type="array",
-     *          ),
      *      )
      * )
      * @return Response
@@ -30,6 +36,61 @@ class PostsController extends A_Controller
         return $this->generateResponse($posts);
     }
 
+    /**
+     * @OA\Put(
+     *     path="/v1/posts/{id}",
+     *     description="update a single post from blog based on post ID",
+     *     @OA\Parameter(
+     *          description="ID of post to update",
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              format="int64",
+     *              type="integer"
+     *          )
+     *      ),
+     *     @OA\RequestBody(
+     *           description="Input data format",
+     *           @OA\MediaType(
+     *               mediaType="multipart/form-data",
+     *               @OA\Schema(
+     *                   type="object",
+     *                   @OA\Property(
+     *                       property="title",
+     *                       description="title of new post",
+     *                       type="string",
+     *                   ),
+     *                   @OA\Property(
+     *                       property="authorId",
+     *                       description="ID of author of new post",
+     *                       type="integer",
+     *                   ),
+     *                   @OA\Property(
+     *                       property="image",
+     *                       description="Image URL of new post",
+     *                       type="string",
+     *                   ),
+     *                   @OA\Property(
+     *                       property="content",
+     *                       description="Content of new post",
+     *                       type="string",
+     *                   ),
+     *               ),
+     *           ),
+     *       ),
+     * @OA\Response(
+     *           response=200,
+     *           description="post has been created successfully",
+     *       ),
+     * @OA\Response(
+     *           response=400,
+     *           description="bad request",
+     *       ),
+     *  )
+     * @param int $id
+     * @return Response
+     */
     function updateAction(int $id): Response
     {
         $posts = new Posts();
@@ -37,6 +98,50 @@ class PostsController extends A_Controller
         return $this->generateResponse(['message' => 'updated']);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/v1/posts",
+     *     description="Creates a post in blog",
+     *     @OA\RequestBody(
+     *          description="Input data format",
+     *          @OA\MediaType(
+     *              mediaType="multipart/form-data",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="title",
+     *                      description="title of new post",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="authorId",
+     *                      description="ID of author of new post",
+     *                      type="integer",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="image",
+     *                      description="Image URL of new post",
+     *                      type="string",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="content",
+     *                      description="Content of new post",
+     *                      type="string",
+     *                  ),
+     *              ),
+     *          ),
+     *      ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="post has been created successfully",
+     *      ),
+     *     @OA\Response(
+     *          response=400,
+     *          description="bad request",
+     *      ),
+     * )
+     * @return Response
+     */
     function insertAction(): Response
     {
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS | FILTER_SANITIZE_STRING);
@@ -48,6 +153,26 @@ class PostsController extends A_Controller
         return $this->generateResponse(['postId' => $postId]);
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/v1/posts/{id}",
+     *     description="deletes a single post from blog based on pot ID",
+     *     @OA\Parameter(
+     *         description="ID of post to delete",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(
+     *             format="int64",
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="post has been deleted"
+     *     ),
+     * )
+     */
     function deleteAction(int $id): Response
     {
         $posts = new Posts();
