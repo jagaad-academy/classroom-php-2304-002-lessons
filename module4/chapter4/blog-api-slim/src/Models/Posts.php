@@ -1,10 +1,7 @@
 <?php
 
-namespace BlogApi\Models;
+namespace BlogAPiSlim\Models;
 
-use BlogApi\App\App;
-use BlogAPiSlim\Models\A_Model;
-use BlogAPiSlim\Models\Authors;
 use Exception;
 use Faker\Factory;
 
@@ -32,24 +29,7 @@ class Posts extends A_Model
         // TODO: Implement findById() method.
     }
 
-    function update(int $id): bool
-    {
-        $sql = "UPDATE " . $this->dbTableName . " SET title=?, author_id=?, image=?, content=? WHERE id=?";
-        $data = App::getDataFromStream();
-        $title = filter_var($data['title'], FILTER_SANITIZE_SPECIAL_CHARS | FILTER_SANITIZE_STRING);
-        $authorId = filter_var($data['authorId'], FILTER_SANITIZE_NUMBER_INT);
-        $img = filter_var($data['image'], FILTER_SANITIZE_SPECIAL_CHARS | FILTER_SANITIZE_STRING);
-        $content = filter_var($data['content'], FILTER_SANITIZE_SPECIAL_CHARS | FILTER_SANITIZE_STRING);
 
-        try {
-            $stm = $this->getPdo()->prepare($sql);
-            $stm->execute([$title, $authorId, $img, $content, $id]);
-
-        } catch (\PDOException $exception){
-            return false;
-        }
-        return true;
-    }
 
     function insert(array $data): int
     {

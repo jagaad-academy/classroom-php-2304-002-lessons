@@ -1,8 +1,6 @@
 <?php
 
-namespace BlogApi\Models;
-
-use BlogAPiSlim\Models\A_Model;
+namespace BlogAPiSlim\Models;
 
 class Authors extends A_Model
 {

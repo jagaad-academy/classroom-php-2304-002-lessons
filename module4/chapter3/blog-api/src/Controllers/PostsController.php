@@ -2,9 +2,8 @@
 
 namespace BlogApi\Controllers;
 
-use BlogApi\Models\Posts;
+use BlogAPiSlim\Models\Posts;
 use Laminas\Diactoros\Response;
-use OpenApi\Annotations as OA;
 
 /**
  * @OA\Info(
