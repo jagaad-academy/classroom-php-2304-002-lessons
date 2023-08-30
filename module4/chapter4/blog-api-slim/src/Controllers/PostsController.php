@@ -10,7 +10,7 @@ class PostsController extends A_Controller
 {
     public function indexAction(Request $request, Response $response): Response|\Slim\Psr7\Message
     {
-        $posts = new Posts();
+        $posts = new Posts($this->container);
         $data = $posts->findAll();
         return $this->render($data, $response);
     }
@@ -36,7 +36,11 @@ class PostsController extends A_Controller
 
     public function fakeAction(Request $request, Response $response, $args = []): Response|\Slim\Psr7\Message
     {
-        $data = ['message' => 'fake data has been created!'];
-        return $this->render($data, $response);
+//        $data = ['message' => 'fake data has been created!'];
+//        return $this->render($data, $response);
+        $args = [
+            'name' => $args['name']
+        ];
+        return $this->view->render($response, 'index.php', $args);
     }
 }

@@ -3,6 +3,7 @@
 namespace BlogAPiSlim\Models;
 
 use BlogAPiSlim\App\DB;
+use DI\Container;
 use PDO;
 
 abstract class A_Model
@@ -19,10 +20,9 @@ abstract class A_Model
 
     abstract function delete(int $id): bool;
 
-    public function __construct()
+    public function __construct(Container $container)
     {
-        $db = new DB();
-        $this->pdo = $db->connection;
+        $this->pdo = $container->get('database');
     }
 
     public function getPdo(): PDO
