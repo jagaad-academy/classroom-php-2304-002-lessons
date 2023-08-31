@@ -2,6 +2,7 @@
 
 namespace BlogAPiSlim\Models;
 
+use DI\Container;
 use Exception;
 use Faker\Factory;
 
@@ -18,6 +19,17 @@ class Posts extends A_Model
     function findAll(): array
     {
         $sql = "SELECT * FROM " . $this->dbTableName;
+        $stm = $this->getPdo()->prepare($sql);
+        $stm->execute();
+        $posts = $stm->fetchAll();
+        return $posts;
+    }
+
+    function findAllWithAuthorInformation(): array
+    {
+        $sql = "SELECT p.title, p.img, p.content, a.first_name, a.last_name 
+        FROM " . $this->dbTableName . " p 
+        LEFT JOIN authors a ON a.id=p.author_id";
         $stm = $this->getPdo()->prepare($sql);
         $stm->execute();
         $posts = $stm->fetchAll();
@@ -41,9 +53,15 @@ class Posts extends A_Model
 
     function insertWithData(array $data): void
     {
-        $sql = "INSERT INTO " . $this->dbTableName . " (title, author_id, image, content) VALUES (?,?,?,?)";
+        $sql = "INSERT INTO " . $this->dbTableName . " (title, author_id, img, content) VALUES (?,?,?,?)";
         $stm = $this->getPdo()->prepare($sql);
         $stm->execute([$data[0], $data[1], $data[2], $data[3]]);
+    }
+    function updateWithData(array $data): void
+    {
+        $sql = "UPDATE " . $this->dbTableName . " SET title=?, author_id=?, img=?, content=? WHERE id=?";
+        $stm = $this->getPdo()->prepare($sql);
+        $stm->execute([$data[0], $data[1], $data[2], $data[3], $data[4]]);
     }
 
     function delete(int $id): bool
@@ -59,10 +77,10 @@ class Posts extends A_Model
         return true;
     }
 
-    function fakeData(): bool
+    function fakeData(Container $container): bool
     {
         $faker = Factory::create('en_US');
-        $author = new Authors();
+        $author = new Authors($container);
 
         try {
             for ($i = 0; $i < 50; $i++) {
@@ -81,6 +99,7 @@ class Posts extends A_Model
                 ]);
             }
         } catch (Exception $exception){
+            error_log($exception->getMessage());
             return false;
         }
 

@@ -23,14 +23,17 @@ class MiddlewareBefore
 //        }
 
         //Logging requests
-//        error_log(json_encode($request->getHeaders()));
+        $headers = "HEADERS: " . json_encode($request->getHeaders()) . PHP_EOL; // array
+        $body = "BODY: " . (string)$request->getBody() . PHP_EOL; // string
+        $uri = "URI: " . $request->getUri() . PHP_EOL;
+        $requestLogFileName = __DIR__ . "/../../" . $_ENV['REQUESTS_LOG_FILE_NAME'];
 
-        $response = $handler->handle($request);
-        $existingContent = (string) $response->getBody();
+        file_put_contents($requestLogFileName, $uri, FILE_APPEND);
+        file_put_contents($requestLogFileName, $headers, FILE_APPEND);
+        file_put_contents($requestLogFileName, $body, FILE_APPEND);
+        file_put_contents($requestLogFileName, PHP_EOL, FILE_APPEND);
+        file_put_contents($requestLogFileName, PHP_EOL, FILE_APPEND);
 
-        $response = new Response();
-        $response->getBody()->write('BEFORE' . $existingContent);
-
-        return $response;
+        return $handler->handle($request);
     }
 }

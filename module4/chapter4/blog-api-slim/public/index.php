@@ -7,7 +7,6 @@ use BlogAPiSlim\Middlewares\MiddlewareBefore;
 use DI\Container;
 use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
-use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Views\PhpRenderer;
@@ -31,17 +30,28 @@ $container->set('view', function () {
     return new PhpRenderer(__DIR__ . "/../src/Views");
 });
 
-//
-//$app->get('/v1/routing-name-test[/{params:.*}]', function(Request $request, Response $response, $args = []){
-//    $params = explode("/", $args['params']);
-//    $response->getBody()->write(print_r($params, true));
-//    return $response;
-//})->setName('test-name');
-
-$app->get('/v1/routing-name-test/{id:[0-9]+}', function(Request $request, Response $response, $args = []){
-    $response->getBody()->write("ID is - " . $args['id']);
-    return $response;
+$app->group('/v1', function (RouteCollectorProxy $group) {
+    $group->get('/posts','\BlogAPiSlim\Controllers\PostsController:indexAction');
+    $group->post('/posts','\BlogAPiSlim\Controllers\PostsController:createAction');
+    $group->put('/posts/{id:[0-9]+}','\BlogAPiSlim\Controllers\PostsController:updateAction');
+    $group->delete('/posts/{id:[0-9]+}','\BlogAPiSlim\Controllers\PostsController:deleteAction');
+    $group->get('/posts/fill-with-fake-data','\BlogAPiSlim\Controllers\PostsController:fakeAction');
 })->add(new MiddlewareBefore())->add(new MiddlewareAfter());
+
+$errorMiddleware = $app->addErrorMiddleware(true, true, true);
+
+$errorMiddleware->setErrorHandler(
+    Slim\Exception\HttpNotFoundException::class,
+    function (Psr\Http\Message\ServerRequestInterface $request) use ($container)
+    {
+        $controller = new ExceptionController($container);
+        return $controller->notFound($request, new Response());
+    }
+);
+
+$app->run();
+
+
 
 //$app->group('/users/{id}', function (RouteCollectorProxy $group) {
 //    $group->map(['GET', 'DELETE', 'PATCH', 'PUT'], '', function ($request, $response, array $args) {
@@ -61,25 +71,19 @@ $app->get('/v1/routing-name-test/{id:[0-9]+}', function(Request $request, Respon
 //});
 
 
-$app->get('/v1/posts','\BlogAPiSlim\Controllers\PostsController:indexAction');
-$app->post('/v1/posts','\BlogAPiSlim\Controllers\PostsController:createAction');
-$app->put('/v1/posts/{id}','\BlogAPiSlim\Controllers\PostsController:updateAction');
-$app->delete('/v1/posts/{id}','\BlogAPiSlim\Controllers\PostsController:deleteAction');
-
-$app->get('/v1/posts/fill-with-fake-data/{name}','\BlogAPiSlim\Controllers\PostsController:fakeAction');
-
 //$routeParser = $app->getRouteCollector()->getRouteParser();
 //echo $routeParser->urlFor('test-name', ['name' => 'Josh'], ['example' => 'name']);
 
-$errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
-$errorMiddleware->setErrorHandler(
-    Slim\Exception\HttpNotFoundException::class,
-    function (Psr\Http\Message\ServerRequestInterface $request) use ($container)
-    {
-        $controller = new ExceptionController($container);
-        return $controller->notFound($request, new Response());
-    }
-);
+//
+//$app->get('/v1/routing-name-test[/{params:.*}]', function(Request $request, Response $response, $args = []){
+//    $params = explode("/", $args['params']);
+//    $response->getBody()->write(print_r($params, true));
+//    return $response;
+//})->setName('test-name');
 
-$app->run();
+
+//$app->get('/v1/routing-name-test/{id:[0-9]+}', function(Request $request, Response $response, $args = []){
+//    $response->getBody()->write("ID is - " . $args['id']);
+//    return $response;
+//})->add(new MiddlewareBefore())->add(new MiddlewareAfter());

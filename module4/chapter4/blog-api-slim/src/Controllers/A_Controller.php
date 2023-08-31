@@ -4,6 +4,7 @@ namespace BlogAPiSlim\Controllers;
 
 use DI\Container;
 use PDO;
+use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Slim\Views\PhpRenderer;
 
@@ -32,5 +33,21 @@ abstract class A_Controller
         $payload = json_encode($data, JSON_PRETTY_PRINT);
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
+    }
+
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    protected function getRequestBodyAsArray(Request $request): array
+    {
+        $requestBody = explode('&', urldecode($request->getBody()->getContents()));
+        $requestBodyParsed = [];
+        foreach ($requestBody as $item) {
+            $itemTmp = explode('=', $item);
+            $requestBodyParsed[$itemTmp[0]] = $itemTmp[1];
+        }
+        return $requestBodyParsed;
     }
 }
