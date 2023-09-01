@@ -19,3 +19,5 @@ mysql-data
 /module4/chapter3/lesson4/vendor
 /module4/chapter4/blog-api-slim/vendor
 /module4/chapter4/lesson1/slim/vendor
+/module4/chapter4/blog-api-slim/.env
+/module4/chapter4/blog-api-slim/tools

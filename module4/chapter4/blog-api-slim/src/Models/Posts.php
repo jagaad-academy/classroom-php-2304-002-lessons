@@ -38,7 +38,7 @@ class Posts extends A_Model
 
     function findById(): array
     {
-        // TODO: Implement findById() method.
+        return [];
     }
 
 
@@ -55,13 +55,20 @@ class Posts extends A_Model
     {
         $sql = "INSERT INTO " . $this->dbTableName . " (title, author_id, img, content) VALUES (?,?,?,?)";
         $stm = $this->getPdo()->prepare($sql);
-        $stm->execute([$data[0], $data[1], $data[2], $data[3]]);
+        $stm->execute(
+            [
+            $data[0]->toString(),
+            $data[1],
+            $data[2],
+            $data[3]->toString()
+            ]
+        );
     }
     function updateWithData(array $data): void
     {
         $sql = "UPDATE " . $this->dbTableName . " SET title=?, author_id=?, img=?, content=? WHERE id=?";
         $stm = $this->getPdo()->prepare($sql);
-        $stm->execute([$data[0], $data[1], $data[2], $data[3], $data[4]]);
+        $stm->execute([$data[0], $data[1], $data[2], $data[3]->toString(), $data[4]]);
     }
 
     function delete(int $id): bool
@@ -85,18 +92,22 @@ class Posts extends A_Model
         try {
             for ($i = 0; $i < 50; $i++) {
                 $authorId = $faker->numberBetween(1000, 5000);
-                $author->insertWithData([
+                $author->insertWithData(
+                    [
                     $authorId,
                     $faker->firstName,
                     $faker->lastName
-                ]);
+                    ]
+                );
 
-                $this->insertWithData([
+                $this->insertWithData(
+                    [
                     $faker->sentence(6, true),
                     $authorId,
                     $faker->imageUrl(200, 150, 'cats'),
                     $faker->paragraph(5, true)
-                ]);
+                    ]
+                );
             }
         } catch (Exception $exception){
             error_log($exception->getMessage());

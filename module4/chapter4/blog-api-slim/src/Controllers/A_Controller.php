@@ -4,6 +4,7 @@ namespace BlogAPiSlim\Controllers;
 
 use DI\Container;
 use PDO;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Slim\Views\PhpRenderer;
@@ -13,7 +14,7 @@ abstract class A_Controller
 
     protected Container $container;
     /**
-     * @var \?PDO
+     * @var ?PDO
      */
     protected mixed $pdo;
     /**
@@ -28,17 +29,22 @@ abstract class A_Controller
         $this->container = $container;
     }
 
-    protected function render(array $data, Response $response): Response|\Slim\Psr7\Message
+    /**
+     * @param  array<mixed>      $data
+     * @param  ResponseInterface $response
+     * @return ResponseInterface
+     */
+    protected function render(array $data, ResponseInterface $response): ResponseInterface
     {
         $payload = json_encode($data, JSON_PRETTY_PRINT);
-        $response->getBody()->write($payload);
+        $response->getBody()->write((string)$payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
 
 
     /**
-     * @param Request $request
-     * @return array
+     * @param  Request $request
+     * @return mixed[]
      */
     protected function getRequestBodyAsArray(Request $request): array
     {

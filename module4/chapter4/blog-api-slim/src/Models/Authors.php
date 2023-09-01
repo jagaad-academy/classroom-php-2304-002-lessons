@@ -12,27 +12,27 @@ class Authors extends A_Model
 
     function findAll(): array
     {
-        // TODO: Implement findAll() method.
+        return [];
     }
 
     function findById(): array
     {
-        // TODO: Implement findById() method.
+        return [];
     }
 
     function update(int $id): bool
     {
-        // TODO: Implement update() method.
+        return false;
     }
 
     function insert(array $data): int
     {
-        // TODO: Implement insert() method.
+        return -1;
     }
 
     function delete(int $id): bool
     {
-        // TODO: Implement delete() method.
+        return false;
     }
 
     function insertWithData(array $data): void

@@ -13,18 +13,22 @@ use Slim\Views\PhpRenderer;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv::createImmutable(__DIR__ . "/..");
-$dotenv->safeLoad();
-
 $container = new Container();
 AppFactory::setContainer($container);
 
 $app = AppFactory::create();
 
-$container->set('database', function () {
-    $db = new DB();
+$container->set('settings', function () {
+    $dotenv = Dotenv::createImmutable(__DIR__ . "/..");
+    $dotenv->safeLoad();
+    return $_ENV;
+});
+
+$container->set('database', function () use ($container) {
+    $db = new DB($container);
     return $db->connection;
 });
+
 
 $container->set('view', function () {
     return new PhpRenderer(__DIR__ . "/../src/Views");
@@ -36,7 +40,8 @@ $app->group('/v1', function (RouteCollectorProxy $group) {
     $group->put('/posts/{id:[0-9]+}','\BlogAPiSlim\Controllers\PostsController:updateAction');
     $group->delete('/posts/{id:[0-9]+}','\BlogAPiSlim\Controllers\PostsController:deleteAction');
     $group->get('/posts/fill-with-fake-data','\BlogAPiSlim\Controllers\PostsController:fakeAction');
-})->add(new MiddlewareBefore())->add(new MiddlewareAfter());
+    $group->get('/apidocs','\BlogAPiSlim\Controllers\OpenAPIController:documentationAction');
+})->add(new MiddlewareBefore($container))->add(new MiddlewareAfter($container));
 
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
