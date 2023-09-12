@@ -1,0 +1,10 @@
+CREATE USER IF NOT EXISTS root@localhost IDENTIFIED BY 'root';
+SET PASSWORD FOR root@localhost = PASSWORD('root');
+GRANT ALL ON *.* TO root@localhost WITH GRANT OPTION;
+CREATE USER IF NOT EXISTS root@'%' IDENTIFIED BY 'root';
+SET PASSWORD FOR root@'%' = PASSWORD('root');
+GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION;
+CREATE USER IF NOT EXISTS testuser@'%' IDENTIFIED BY 'testuser';
+SET PASSWORD FOR testuser@'%' = PASSWORD('testuser');
+CREATE DATABASE IF NOT EXISTS test;
+GRANT ALL ON test.* TO testuser@'%';

@@ -7,8 +7,8 @@
 
 
 $servername = "mariadb";
-$username = "test";
-$password = "123";
+$username = "testuser";
+$password = "testuser";
 $dbname = "test";
 $port = "3306";
 try {

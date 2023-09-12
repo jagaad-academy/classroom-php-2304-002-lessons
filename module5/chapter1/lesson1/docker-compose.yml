@@ -5,11 +5,12 @@ services:
         working_dir: /application
         volumes:
             - '.:/application'
+            - './mariadb.sql:/docker-entrypoint-initdb.d/mariadb.sql'
         environment:
-            - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_DATABASE=test
-            - MYSQL_USER=test
-            - MYSQL_PASSWORD=123
+            - MARIADB_ROOT_PASSWORD=root
+            - MARIADB_DATABASE=test
+            - MARIADB_USER=testuser
+            - MARIADB_PASSWORD=testuser
         ports:
             - '8891:3306'
 
