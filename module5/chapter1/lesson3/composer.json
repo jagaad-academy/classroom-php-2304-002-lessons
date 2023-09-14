@@ -1,0 +1,28 @@
+{
+    "name": "hennadii.shvedko/lesson3",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "APIAuthLesson\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hennadii Shvedko",
+            "email": "hennadii.shvedko@jagaad.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.6",
+        "nyholm/psr7": "^1.8",
+        "nyholm/psr7-server": "^1.0",
+        "guzzlehttp/psr7": "^1",
+        "sapphirecat/slim4-http-interop-adapter": "^1.1",
+        "laminas/laminas-diactoros": "^3.2",
+        "fakerphp/faker": "^1.23",
+        "tuupola/slim-basic-auth": "^3.3",
+        "vlucas/phpdotenv": "^5.5",
+        "tuupola/slim-jwt-auth": "^3.7"
+    }
+}
