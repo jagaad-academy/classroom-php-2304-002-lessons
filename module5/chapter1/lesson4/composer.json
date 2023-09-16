@@ -21,6 +21,7 @@
         "sapphirecat/slim4-http-interop-adapter": "^1.1",
         "laminas/laminas-diactoros": "^3.2",
         "vlucas/phpdotenv": "^5.5",
-        "rbdwllr/reallysimplejwt": "^5.0"
+        "ext-pdo": "*",
+        "firebase/php-jwt": "^6.8"
     }
 }

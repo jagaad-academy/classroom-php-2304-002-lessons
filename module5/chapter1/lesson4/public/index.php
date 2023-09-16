@@ -3,7 +3,8 @@
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use ReallySimpleJWT\Token;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Slim\Factory\AppFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -33,33 +34,31 @@ $app->post('/v1/jwt', function (Request $request, Response $response, $args) {
     }
 
     try {
-        $pdo = new \PDO('mysql:host=lesson4_mariadb;dbname=' . $dbName, $dbUser, $passUser);
+        $pdo = new PDO('mysql:host=lesson4_mariadb;dbname=' . $dbName, $dbUser, $passUser);
         $sql = "SELECT * FROM users WHERE email=?";
         $stm = $pdo->prepare($sql);
-        $stm->bindParam(1, $requestUserclear);
+        $stm->bindParam(1, $requestUser);
         $stm->execute();
-
         $user = $stm->fetch(PDO::FETCH_ASSOC);
         if($user) {
             if($user['password'] == $requestUserPass) {
                 $payload = [
                     'iat' => time(),
                     'uid' => $user['id'],
-                    'exp' => time() + 10,
+                    'exp' => time() + 3600,
                     'iss' => 'localhost',
                     'name' => $user['email']
                 ];
-
-                $jwt = Token::customPayload($payload, $_ENV['JWT_SECRET']);
-
-                echo $jwt;
+                $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
+                return new JsonResponse(['token' => $jwt]);
             }
         } else {
             return new JsonResponse(['message' => 'User not found, authentication failed'], 401);
         }
 
-    } catch (PDOException $e){
-
+    } catch (Exception $e){
+        error_log($e->getMessage());
+        return new JsonResponse(['message' => 'Internal server error'], 500);
     }
 
     return $response;
