@@ -34,7 +34,7 @@ services:
             - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
 
     phpmyadmin:
-        image: phpmyadmin/phpmyadmin:latest
+        image: 'phpmyadmin/phpmyadmin:latest'
         container_name: lesson4_phpmyadmin
         ports:
             - '8001:80'
@@ -43,8 +43,8 @@ services:
             - PMA_HOST=lesson4_mariadb
 
     composer:
-        image: composer:latest
+        image: 'composer:latest'
         container_name: lesson4_composer
-        command: [ "composer", "install" ]
+        command: [ "composer", "update" ]
         volumes:
             - '.:/app'

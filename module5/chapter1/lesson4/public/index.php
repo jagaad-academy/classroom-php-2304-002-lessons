@@ -1,5 +1,6 @@
 <?php
 
+
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -7,12 +8,17 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Slim\Factory\AppFactory;
 
+
 require __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
 $dotenv->safeLoad();
 
-$app = AppFactory::create();
+
+$app = AppFactory::create(container: $container);
+
+$container = $app->getContainer();
+
 
 $app->get('/v1/jwt/secret', function (Request $request, Response $response, $args) {
     echo bin2hex(random_bytes(32));
