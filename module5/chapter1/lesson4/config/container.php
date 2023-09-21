@@ -5,6 +5,8 @@
  * 18.09.2023
  */
 
+use APIDocker\Repositories\UserRepository;
+use APIDocker\Repositories\UserRepositoryDoctrine;
 use DI\Container;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\ORM\EntityManager;
@@ -46,11 +48,11 @@ $container->set('settings', function ($container) {
             // of valid parameters: https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html
             'connection' => [
                 'driver' => 'pdo_mysql',
-                'host' => 'lesson4_mariadb',
+                'host' => $_ENV['MARIADB_HOST'],
                 'port' => 3306,
-                'dbname' => 'doctrine_test',
-                'user' => 'root',
-                'password' => 'root'
+                'dbname' => $_ENV['MARIADB_DB_NAME'],
+                'user' => $_ENV['MARIADB_DB_USER'],
+                'password' => $_ENV['MARIADB_DB_USER_PASSWORD']
             ]
         ]
 
@@ -95,6 +97,11 @@ $container->set(\PDO::class, function ($c){
     }
 
     return $pdo;
+});
+
+$container->set(UserRepository::class, function (Container $container){
+    $em = $container->get(EntityManager::class);
+    return new UserRepositoryDoctrine($em);
 });
 
 return $container;

@@ -1,6 +1,10 @@
 <?php
 
 
+use APIDocker\Entities\Users;
+use APIDocker\Repositories\UserRepository;
+use APIDocker\Repositories\UserRepositoryDoctrine;
+use Doctrine\ORM\EntityManager;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -10,15 +14,89 @@ use Slim\Factory\AppFactory;
 
 
 require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../config/container.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
 $dotenv->safeLoad();
-
 
 $app = AppFactory::create(container: $container);
 
 $container = $app->getContainer();
 
+$app->get('/v1/users', function (Request $request, Response $response) use ($app) {
+    $userRepository = $app->getContainer()->get(UserRepository::class);
+    /** @var Users $user */
+    $user = $userRepository->findById(1);
+    return new JsonResponse($user->getEmail());
+});
+
+$app->get('/v1/users/testcom', function (Request $request, Response $response) use ($app) {
+    $em = $app->getContainer()->get(EntityManager::class);
+
+    $query = $em->createQuery('SELECT u.email FROM APIDocker\Entities\Users u WHERE u.email LIKE :email');
+
+    $query->setParameter('email', '%test.com%');
+    $users = $query->getResult();
+    return new JsonResponse(['usersFound' => count($users)]);
+});
+
+$app->get('/v1/users/querybuilder', function (Request $request, Response $response) use ($app) {
+    $em = $app->getContainer()->get(EntityManager::class);
+    $qb = $em->createQueryBuilder();
+
+    $qb->select('u')
+        ->from('APIDocker\Entities\Users', 'u')
+        ->where('u.id=5');
+
+    $query = $qb->getQuery();
+    $users = $query->getResult();
+    $user = $users[0];
+    return new JsonResponse(['userEmail' => $user->getEmail()]);
+});
+
+$app->post('/v1/users', function (Request $request, Response $response) use ($app) {
+    $userInfo = json_decode($request->getBody()->getContents(), true);
+    $user = new Users($userInfo['email']);
+    /** @var UserRepositoryDoctrine $userRepository */
+    $userRepository = $app->getContainer()->get(UserRepository::class);
+    $userRepository->store($user);
+    return new JsonResponse(['message' => 'user has been created']);
+});
+
+$app->delete('/v1/users/{id}', function (Request $request, Response $response, array $args) use ($app) {
+    $userId = $args['id'];
+    if((int)$userId != 0){
+        /** @var UserRepositoryDoctrine $userRepository */
+        $userRepository = $app->getContainer()->get(UserRepository::class);
+        $user = $userRepository->findById($userId);
+        if(is_null($user)){
+            return new JsonResponse(['message' => 'user not found'], 404);
+        }
+        $userRepository->remove($user);
+        return new JsonResponse(['message' => 'user has been removed']);
+    }
+
+    return new JsonResponse(['message' => 'please provide a userId'], 400);
+});
+
+$app->put('/v1/users/{id}', function (Request $request, Response $response, array $args) use ($app) {
+    $userId = $args['id'];
+    $userInfo = json_decode($request->getBody()->getContents(), true);
+    if((int)$userId != 0){
+        /** @var UserRepositoryDoctrine $userRepository */
+        $userRepository = $app->getContainer()->get(UserRepository::class);
+        $user = $userRepository->findById($userId);
+        if(is_null($user)){
+            return new JsonResponse(['message' => 'user not found'], 404);
+        }
+
+        $user->setEmail($userInfo['email']);
+        $userRepository->update($user);
+        return new JsonResponse(['message' => 'user has been updated']);
+    }
+
+    return new JsonResponse(['message' => 'please provide a userId'], 400);
+});
 
 $app->get('/v1/jwt/secret', function (Request $request, Response $response, $args) {
     echo bin2hex(random_bytes(32));
@@ -69,5 +147,8 @@ $app->post('/v1/jwt', function (Request $request, Response $response, $args) {
 
     return $response;
 });
+
+$errorMiddleware = $app->addErrorMiddleware(true, true, true);
+
 
 $app->run();

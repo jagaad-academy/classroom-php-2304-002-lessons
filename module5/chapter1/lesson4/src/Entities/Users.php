@@ -37,4 +37,9 @@ final class Users
     {
         return $this->registeredAt;
     }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
 }
