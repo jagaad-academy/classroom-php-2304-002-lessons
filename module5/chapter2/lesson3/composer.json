@@ -1,0 +1,21 @@
+{
+    "name": "hennadii.shvedko/lesson3",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "HennadiiShvedko\\Lesson3\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hennadii Shvedko",
+            "email": "hennadii.shvedko@jagaad.com"
+        }
+    ],
+    "require-dev": {
+        "codeception/codeception": "^5.0",
+        "codeception/module-phpbrowser": "*",
+        "codeception/module-asserts": "*",
+        "phpunit/phpunit": "^10.3"
+    }
+}
