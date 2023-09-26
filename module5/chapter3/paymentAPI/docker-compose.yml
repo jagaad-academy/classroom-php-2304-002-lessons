@@ -1,0 +1,49 @@
+version: '3.1'
+services:
+    mariadb:
+        image: 'mariadb:11.0'
+        container_name: paymentapi_mariadb
+        working_dir: /application
+        volumes:
+            - '.:/application'
+        environment:
+            - 'MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_USER}'
+            - 'MYSQL_DATABASE=${MARIADB_DB_NAME}'
+            - 'MYSQL_USER=${MARIADB_DB_USER}'
+            - 'MYSQL_PASSWORD=${MARIADB_DB_USER_PASSWORD}'
+        ports:
+            - '8003:3306'
+
+    webserver:
+        image: 'nginx:alpine'
+        container_name: paymentapi_webserver
+        working_dir: /application
+        volumes:
+            - '.:/application'
+            - './phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
+        ports:
+            - '8000:80'
+
+    php-fpm:
+        build: phpdocker/php-fpm
+        container_name: paymentapi_php
+        working_dir: /application
+        volumes:
+            - '.:/application'
+            - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
+
+    phpmyadmin:
+        image: 'phpmyadmin/phpmyadmin:latest'
+        container_name: paymentapi_phpmyadmin
+        ports:
+            - '8001:80'
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=lesson4_mariadb
+
+    composer:
+        image: 'composer:latest'
+        container_name: paymentapi_composer
+        command: [ "composer", "update" ]
+        volumes:
+            - '.:/app'
