@@ -9,6 +9,11 @@ use DI\Container;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
+use Monolog\Formatter\JsonFormatter;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
+use Monolog\Logger;
 use PaymentApi\Repository\MethodsRepository;
 use PaymentApi\Repository\MethodsRepositoryDoctrine;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -79,7 +84,21 @@ $container->set(EntityManager::class, function (Container $c): EntityManager {
     return EntityManager::create($settings['doctrine']['connection'], $config);
 });
 
-$container->set(MethodsRepository::class, function (Container $container){
+$container->set(Logger::class, function (Container $container) {
+    // Monolog Example
+    $logger = new Logger('logger');
+    $output = "%level_name% | %datetime% > %message% | %context% %extra%\n";
+    $dateFormat = "Y-m-d, H:i:s";
+    $logger->pushHandler((new StreamHandler(__DIR__ . '/../logs/error.log', Level::Error))
+        ->setFormatter(new LineFormatter($output, $dateFormat)));
+    $logger->pushHandler((new StreamHandler(__DIR__ . '/../logs/info.log', Level::Info))
+        ->setFormatter(new JsonFormatter()));
+    $logger->pushHandler((new StreamHandler(__DIR__ . '/../logs/debug.log', Level::Debug))
+        ->setFormatter(new LineFormatter($output, $dateFormat)));
+    return $logger;
+});
+
+$container->set(MethodsRepository::class, function (Container $container) {
     $em = $container->get(EntityManager::class);
     return new MethodsRepositoryDoctrine($em);
 });
