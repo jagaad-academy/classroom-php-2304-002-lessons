@@ -84,23 +84,25 @@ $container->set(EntityManager::class, function (Container $c): EntityManager {
     return EntityManager::create($settings['doctrine']['connection'], $config);
 });
 
-$container->set(Logger::class, function (Container $container) {
-    // Monolog Example
-    $logger = new Logger('logger');
-    $output = "%level_name% | %datetime% > %message% | %context% %extra%\n";
-    $dateFormat = "Y-m-d, H:i:s";
-    $logger->pushHandler((new StreamHandler(__DIR__ . '/../logs/error.log', Level::Error))
-        ->setFormatter(new LineFormatter($output, $dateFormat)));
-    $logger->pushHandler((new StreamHandler(__DIR__ . '/../logs/info.log', Level::Info))
-        ->setFormatter(new JsonFormatter()));
-    $logger->pushHandler((new StreamHandler(__DIR__ . '/../logs/debug.log', Level::Debug))
-        ->setFormatter(new LineFormatter($output, $dateFormat)));
-    return $logger;
-});
-
 $container->set(MethodsRepository::class, function (Container $container) {
     $em = $container->get(EntityManager::class);
     return new MethodsRepositoryDoctrine($em);
+});
+
+$container->set(Logger::class, function (Container $container){
+    $logger = new Logger('paymentAPI');
+    $output = "%level_name% | %datetime% > %message% | %context% %extra%\n";
+    $dateFormat = "Y-m-d, H:i:s";
+    $logger->pushHandler((new StreamHandler(__DIR__ . '/../logs/alert.log', Level::Alert))
+        ->setFormatter(new LineFormatter($output, $dateFormat)));
+    $logger->pushHandler((new StreamHandler(__DIR__ . '/../logs/critical.log', Level::Critical))
+        ->setFormatter(new JsonFormatter()));
+    $logger->pushHandler(new StreamHandler(__DIR__ . '/../logs/error.log', Level::Error));
+    $logger->pushHandler(new StreamHandler(__DIR__ . '/../logs/warning.log', Level::Warning));
+    $logger->pushHandler(new StreamHandler(__DIR__ . '/../logs/notice.log', Level::Notice));
+    $logger->pushHandler(new StreamHandler(__DIR__ . '/../logs/info.log', Level::Info));
+    $logger->pushHandler(new StreamHandler(__DIR__ . '/../logs/debug.log', Level::Debug));
+    return $logger;
 });
 
 return $container;

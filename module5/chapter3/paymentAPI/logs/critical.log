@@ -1,0 +1,5 @@
+[2023-09-28T15:32:21.036679+00:00] paymentAPI.ALERT: DBException message! DB error! [] []
+[2023-09-28T15:33:58.240982+00:00] paymentAPI.CRITICAL: PDO::__construct(): Argument #1 ($dsn) must be a valid data source name [] []
+{"message":"PDO::__construct(): Argument #1 ($dsn) must be a valid data source name","context":{},"level":500,"level_name":"CRITICAL","channel":"paymentAPI","datetime":"2023-09-28T15:39:54.837416+00:00","extra":{}}
+{"message":"DBException message! DB error!","context":{},"level":550,"level_name":"ALERT","channel":"paymentAPI","datetime":"2023-09-28T15:42:12.783759+00:00","extra":{}}
+{"message":"DBException message! DB error!","context":{},"level":550,"level_name":"ALERT","channel":"paymentAPI","datetime":"2023-09-28T15:44:08.063471+00:00","extra":{}}

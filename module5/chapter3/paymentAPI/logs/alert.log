@@ -1,0 +1,3 @@
+[2023-09-28T15:32:21.036679+00:00] paymentAPI.ALERT: DBException message! DB error! [] []
+ALERT | 2023-09-28T15:42:12.783759+00:00 > DBException message! DB error! | [] []
+ALERT | 2023-09-28, 15:44:08 > DBException message! DB error! | [] []

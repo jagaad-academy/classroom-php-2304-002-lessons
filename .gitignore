@@ -22,3 +22,7 @@ mysql-data
 /module4/chapter4/blog-api-slim/.env
 /module4/chapter4/blog-api-slim/tools
 /module5/chapter2/lesson3/vendor
+/module5/chapter1/lesson3/vendor
+/module5/chapter1/lesson4/vendor
+/module5/chapter3/paymentAPI/vendor
+/module5/chapter3/paymentAPI/.env

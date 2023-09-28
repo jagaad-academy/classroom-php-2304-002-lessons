@@ -10,6 +10,8 @@ namespace PaymentApi\Middleware;
 
 use Doctrine\ORM\Exception\ORMException;
 use Monolog\Logger;
+use PaymentApi\Exception\A_Exception;
+use PaymentApi\Exception\DBException;
 use Psr\Log\LoggerInterface;
 use Slim\App;
 use Slim\Exception\HttpNotFoundException;
@@ -34,20 +36,19 @@ final class CustomErrorHandler
         ?LoggerInterface $logger = null
     )
     {
-        $logger?->error($exception->getMessage());
-
-        if ($exception instanceof ORMException) {
-            $payload = [];
+        if ($exception instanceof ORMException
+            || $exception instanceof HttpNotFoundException
+            || $exception instanceof \PDOException) {
+            $this->logger->critical($exception->getMessage());
             $statusCode = 500;
-        } else if ($exception instanceof HttpNotFoundException) {
-            $payload = [];
-            $this->logger->info($exception->getMessage());
-            $statusCode = 404;
-        } else if ($exception instanceof \PDOException) {
-            $payload = [];
-            $this->logger->debug($exception->getMessage());
-            $statusCode = 400;
+        } else if($exception instanceof A_Exception) {
+            $this->logger->alert($exception->getMessage());
+            $statusCode = $exception->getCode();
         }
+
+        $payload = [
+            'message' => $exception->getMessage()
+        ];
 
         if ($displayErrorDetails) {
             $payload['details'] = $exception->getMessage();
