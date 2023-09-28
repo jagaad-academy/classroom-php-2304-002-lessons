@@ -1,0 +1,23 @@
+{
+    "name": "hennadii.shvedko/blog-api",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "BlogApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hennadii Shvedko",
+            "email": "hennadii.shvedko@jagaad.com"
+        }
+    ],
+    "require": {
+        "league/route": "^5.1",
+        "laminas/laminas-diactoros": "^3.1",
+        "laminas/laminas-httphandlerrunner": "^2.7",
+        "vlucas/phpdotenv": "^5.5",
+        "fzaninotto/faker": "^1.5",
+        "zircote/swagger-php": "^4.7"
+    }
+}
