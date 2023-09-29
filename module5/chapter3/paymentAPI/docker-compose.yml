@@ -27,10 +27,19 @@ services:
     php-fpm:
         build: phpdocker/php-fpm
         container_name: paymentapi_php
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
         working_dir: /application
+        expose:
+            - 9000
+        environment:
+            - XDEBUG_SESSION=1
+            - PHP_IDE_CONFIG=serverName=localhost
         volumes:
             - '.:/application'
             - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
+            - './phpdocker/php-fpm/xdebug.ini:/etc/php/8.2/fpm/conf.d/docker-php-ext-xdebug.ini'
+            - './phpdocker/php-fpm/error_reporting.ini:/etc/php/8.2/fpm/conf.d/error_reporting.ini'
 
     phpmyadmin:
         image: 'phpmyadmin/phpmyadmin:latest'

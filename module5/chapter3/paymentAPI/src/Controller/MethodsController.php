@@ -9,6 +9,8 @@ namespace PaymentApi\Controller;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use PaymentApi\Exception\DBException;
+use PaymentApi\Model\Methods;
+use PaymentApi\Repository\MethodsRepositoryDoctrine;
 use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -21,7 +23,7 @@ class MethodsController
     public function indexAction(Request $request, Response $response): ResponseInterface
     {
 //        new PDO('', '', '');
-        throw new DBException('DBException message! DB error!', 500);
+//        throw new DBException('DBException message! DB error!', 500);
         return new JsonResponse(['message'=>'test'], 200);
     }
 }
