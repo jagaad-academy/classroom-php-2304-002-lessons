@@ -1,38 +1,38 @@
 <?php
 /**
- * MethodsController.php
+ * CustomersController.php
  * hennadii.shvedko
- * 26.09.2023
+ * 03.10.2023
  */
 
 namespace PaymentApi\Controller;
 
 use Laminas\Diactoros\Response\JsonResponse;
-use PaymentApi\Model\Methods;
-use PaymentApi\Repository\MethodsRepository;
+use PaymentApi\Model\Customers;
+use PaymentApi\Repository\CustomersRepository;
 use PaymentApi\Routes;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-final class MethodsController extends A_Controller
+final class CustomersController extends A_Controller
 {
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
-        $this->routeEnum = Routes::Methods;
-        $this->routeValue = Routes::Methods->value;
-        $this->repository = $container->get(MethodsRepository::class);
+        $this->routeEnum = Routes::Customers;
+        $this->routeValue = Routes::Customers->value;
+        $this->repository = $container->get(CustomersRepository::class);
     }
 
     /**
      * @OA\Get(
-     *     path="/v1/methods",
-     *     description="Returns all payment methods",
+     *     path="/v1/customers",
+     *     description="Returns all customers",
      *     @OA\Response(
      *          response=200,
-     *          description="methods response",
+     *          description="customers response",
      *      ),
      *      @OA\Response(
      *          response=500,
@@ -42,15 +42,16 @@ final class MethodsController extends A_Controller
      * )
      * @return \Laminas\Diactoros\Response
      */
-    public function indexAction(Request $request, ResponseInterface $response): ResponseInterface
+    public function indexAction(Request $request, Response $response): ResponseInterface
     {
         return parent::indexAction($request, $response);
     }
 
+
     /**
      * @OA\Post(
-     *     path="/v1/methods",
-     *     description="Creates a payment method",
+     *     path="/v1/customers",
+     *     description="Creates a customer",
      *     @OA\RequestBody(
      *          description="Input data format",
      *          @OA\MediaType(
@@ -59,7 +60,12 @@ final class MethodsController extends A_Controller
      *                  type="object",
      *                  @OA\Property(
      *                      property="name",
-     *                      description="name of new payment method",
+     *                      description="name of new customer",
+     *                      type="string",
+     *                  ),
+     *                   @OA\Property(
+     *                      property="address",
+     *                      description="address of new customers",
      *                      type="string",
      *                  ),
      *              ),
@@ -67,7 +73,7 @@ final class MethodsController extends A_Controller
      *      ),
      *     @OA\Response(
      *          response=200,
-     *          description="payment method has been created successfully",
+     *          description="Customer has been created successfully",
      *      ),
      *     @OA\Response(
      *          response=400,
@@ -87,21 +93,59 @@ final class MethodsController extends A_Controller
     {
         $requestBody = json_decode($request->getBody()->getContents(), true);
         $name = filter_var($requestBody['name'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $address = filter_var($requestBody['address'], FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $this->model = new Methods();
+        $this->model = new Customers();
         $this->model->setName($name);
+        $this->model->setAddress($address);
         $this->model->setIsActive(true);
 
         return parent::createAction($request, $response);
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/v1/customers/{id}",
+     *     description="deletes a single customer based on customer's ID",
+     *     @OA\Parameter(
+     *         description="ID of customer to delete",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(
+     *             format="int64",
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="customer has been deleted"
+     *     ),
+     * @OA\Response(
+     *            response=400,
+     *            description="bad request",
+     *        ),
+     * @OA\Response(
+     *                 response=404,
+     *             description="Customer not found",
+     *         ),
+     * @OA\Response(
+     *             response=500,
+     *             description="Internal server error",
+     *         ),
+     *   )
+     */
+    public function removeAction(Request $request, Response $response, array $args): ResponseInterface
+    {
+        return parent::removeAction($request, $response, $args);
+    }
 
     /**
      * @OA\Put(
-     *     path="/v1/methods/{id}",
-     *     description="update a single paymnet method based on method ID",
+     *     path="/v1/customers/{id}",
+     *     description="update a single customer based on customer's ID",
      *     @OA\Parameter(
-     *          description="ID of a payment method to update",
+     *          description="ID of a customer to update",
      *          in="path",
      *          name="id",
      *          required=true,
@@ -118,7 +162,12 @@ final class MethodsController extends A_Controller
      *                   type="object",
      *                   @OA\Property(
      *                       property="name",
-     *                       description="name of paymnet method",
+     *                       description="name of customer",
+     *                       type="string",
+     *                   ),
+     *                  @OA\Property(
+     *                       property="address",
+     *                       description="address of customer",
      *                       type="string",
      *                   ),
      *               ),
@@ -126,7 +175,7 @@ final class MethodsController extends A_Controller
      *       ),
      * @OA\Response(
      *           response=200,
-     *           description="paymnet method has been created successfully",
+     *           description="customer has been created successfully",
      *       ),
      * @OA\Response(
      *           response=400,
@@ -134,7 +183,7 @@ final class MethodsController extends A_Controller
      *       ),
      *     @OA\Response(
      *                response=404,
-     *            description="Method not found",
+     *            description="customer not found",
      *        ),
      *     @OA\Response(
      *            response=500,
@@ -150,31 +199,34 @@ final class MethodsController extends A_Controller
     {
         $requestBody = json_decode($request->getBody()->getContents(), true);
         $name = filter_var($requestBody['name'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $address = filter_var($requestBody['address'], FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $method = $this->repository->findById($args['id']);
-        if (is_null($method)) {
+        /** @var Customers $customer */
+        $customer = $this->repository->findById($args['id']);
+        if (is_null($customer)) {
             $context = [
-                'type' => '/errors/no_methods_found_upon_update',
-                'title' => 'List of methods',
+                'type' => '/errors/no_customers_found_upon_update',
+                'title' => 'List of customers',
                 'status' => 404,
                 'detail' => $args['id'],
-                'instance' => '/v1/methods/{id}'
+                'instance' => '/v1/customers/{id}'
             ];
-            $this->logger->info('No methods found', $context);
+            $this->logger->info('No customers found', $context);
             return new JsonResponse($context, 404);
         }
-        $this->model = $method;
-        $method->setName($name);
+        $this->model = $customer;
+        $this->model->setName($name);
+        $this->model->setAddress($address);
 
         return parent::updateAction($request, $response, $args);
     }
 
     /**
      * @OA\Get(
-     *     path="/v1/methods/deactivate/{id}",
-     *     description="Deactivates a single paymnet method based on method ID",
+     *     path="/v1/customers/deactivate/{id}",
+     *     description="Deactivates a single customer based on customer's ID",
      *     @OA\Parameter(
-     *          description="ID of a payment method to update",
+     *          description="ID of a customer to update",
      *          in="path",
      *          name="id",
      *          required=true,
@@ -185,7 +237,7 @@ final class MethodsController extends A_Controller
      *      ),
      * @OA\Response(
      *           response=200,
-     *           description="paymnet method has been deactivated successfully",
+     *           description="Customer has been deactivated successfully",
      *       ),
      * @OA\Response(
      *           response=400,
@@ -193,7 +245,7 @@ final class MethodsController extends A_Controller
      *       ),
      *     @OA\Response(
      *                response=404,
-     *            description="Method not found",
+     *            description="Customer not found",
      *        ),
      *     @OA\Response(
      *            response=500,
@@ -212,10 +264,10 @@ final class MethodsController extends A_Controller
 
     /**
      * @OA\Get(
-     *     path="/v1/methods/reactivate/{id}",
-     *     description="Reactivates a single paymnet method based on method ID",
+     *     path="/v1/customers/reactivate/{id}",
+     *     description="Reactivates a single customer based on customer's ID",
      *     @OA\Parameter(
-     *          description="ID of a payment method to update",
+     *          description="ID of a customer to update",
      *          in="path",
      *          name="id",
      *          required=true,
@@ -226,7 +278,7 @@ final class MethodsController extends A_Controller
      *      ),
      * @OA\Response(
      *           response=200,
-     *           description="paymnet method has been reactivated successfully",
+     *           description="Customer has been reactivated successfully",
      *       ),
      * @OA\Response(
      *           response=400,
@@ -234,7 +286,7 @@ final class MethodsController extends A_Controller
      *       ),
      *     @OA\Response(
      *                response=404,
-     *            description="Method not found",
+     *            description="Customer not found",
      *        ),
      *     @OA\Response(
      *            response=500,
@@ -249,42 +301,5 @@ final class MethodsController extends A_Controller
     public function reactivateAction(Request $request, Response $response, array $args): ResponseInterface
     {
         return parent::reactivateAction($request, $response, $args);
-    }
-
-    /**
-     * @OA\Delete(
-     *     path="/v1/methods/{id}",
-     *     description="deletes a single paymnet method based on method ID",
-     *     @OA\Parameter(
-     *         description="ID of method to delete",
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         @OA\Schema(
-     *             format="int64",
-     *             type="integer"
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="paymnet method has been deleted"
-     *     ),
-     * @OA\Response(
-     *            response=400,
-     *            description="bad request",
-     *        ),
-     * @OA\Response(
-     *                 response=404,
-     *             description="Method not found",
-     *         ),
-     * @OA\Response(
-     *             response=500,
-     *             description="Internal server error",
-     *         ),
-     *   )
-     */
-    public function removeAction(Request $request, Response $response, array $args): ResponseInterface
-    {
-        return parent::removeAction($request, $response, $args);
     }
 }

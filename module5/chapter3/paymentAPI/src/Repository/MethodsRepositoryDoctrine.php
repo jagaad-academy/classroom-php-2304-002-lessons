@@ -7,45 +7,11 @@
 
 namespace PaymentApi\Repository;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\NotSupported;
-use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\OptimisticLockException;
 use PaymentApi\Model\Methods;
 
-class MethodsRepositoryDoctrine implements MethodsRepository
+class MethodsRepositoryDoctrine extends A_Repository implements MethodsRepository
 {
-    public function __construct(private EntityManager $em){}
-
-    /**
-     * @throws OptimisticLockException
-     * @throws ORMException
-     */
-    public function store(Methods $method): void
-    {
-        $this->em->persist($method);
-        $this->em->flush();
-    }
-
-    /**
-     * @throws OptimisticLockException
-     * @throws ORMException
-     */
-    public function update(Methods $method): void
-    {
-        $this->em->persist($method);
-        $this->em->flush();
-    }
-
-    /**
-     * @throws OptimisticLockException
-     * @throws ORMException
-     */
-    public function remove(Methods $method): void
-    {
-        $this->em->remove($method);
-        $this->em->flush();
-    }
 
     /**
      * @throws NotSupported
