@@ -36,6 +36,7 @@ final class CustomErrorHandler
         ?LoggerInterface $logger = null
     )
     {
+        $statusCode = 500;
         if ($exception instanceof ORMException
             || $exception instanceof HttpNotFoundException
             || $exception instanceof \PDOException) {

@@ -7,6 +7,8 @@
 
 namespace PaymentApi\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity, ORM\Table(name: 'methods')]
@@ -20,6 +22,14 @@ class Methods extends A_Model
 
     #[ORM\Column(name: 'is_active', type: 'boolean', nullable: false)]
     private bool $isActive;
+
+    #[ORM\OneToMany(mappedBy: "method", targetEntity: Payments::class)]
+    private Collection $method;
+
+    public function __construct()
+    {
+        $this->method = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -49,5 +59,15 @@ class Methods extends A_Model
     public function setIsActive(bool $isActive): void
     {
         $this->isActive = $isActive;
+    }
+
+    public function getMethod(): ArrayCollection
+    {
+        return $this->method;
+    }
+
+    public function setMethod(ArrayCollection $method): void
+    {
+        $this->method = $method;
     }
 }

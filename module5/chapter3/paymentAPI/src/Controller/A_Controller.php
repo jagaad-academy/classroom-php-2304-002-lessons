@@ -46,7 +46,7 @@ abstract class A_Controller
                 'type' => '',
                 'title' => 'List of ' . $this->routeValue,
                 'status' => 200,
-                'detail' => $records,
+                'detail' => count($records),
                 'instance' => '/v1/' . $this->routeValue
             ], 200);
         } else {
@@ -54,7 +54,7 @@ abstract class A_Controller
                 'type' => '/errors/no_' . $this->routeValue . '_found',
                 'title' => 'List of ' . $this->routeValue,
                 'status' => 404,
-                'detail' => $records,
+                'detail' => count($records),
                 'instance' => '/v1/' . $this->routeValue
             ];
             $this->logger->info('No ' . $this->routeValue . ' found', $context);

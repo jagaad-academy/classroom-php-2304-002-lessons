@@ -3,6 +3,8 @@
 use PaymentApi\Middleware\CustomErrorHandler;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../container/container.php';
@@ -10,6 +12,10 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
 $dotenv->safeLoad();
 //APP_ROOT
 $app = AppFactory::createFromContainer(container: $container);
+
+$app->get('/v1', function (Request $request, Response $response, $args) {
+    echo "Hello World!";
+});
 
 //Methods
 $app->group('/v1/methods', function (RouteCollectorProxy $group) {
@@ -42,6 +48,7 @@ $app->group('/v1/payments', function (RouteCollectorProxy $group) {
 //Basket
 $app->group('/v1/basket', function (RouteCollectorProxy $group) {
     $group->get('', '\PaymentApi\Controller\BasketController:indexAction');
+    $group->get('/{id:[0-9]+}', '\PaymentApi\Controller\BasketController:getAction');
     $group->post('', '\PaymentApi\Controller\BasketController:createAction');
     $group->delete('/{id:[0-9]+}', '\PaymentApi\Controller\BasketController:removeAction');
     $group->put('/{id:[0-9]+}', '\PaymentApi\Controller\BasketController:updateAction');

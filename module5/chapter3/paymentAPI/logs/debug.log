@@ -1,0 +1,7 @@
+[2023-10-06T14:34:04.570987+00:00] paymentAPI.CRITICAL: Not found. [] []
+[2023-10-06T15:10:41.105702+00:00] paymentAPI.INFO: No methods found {"type":"/errors/no_methods_found","title":"List of methods","status":404,"detail":[],"instance":"/v1/methods"} []
+[2023-10-06T15:19:08.717962+00:00] paymentAPI.INFO: No customers found {"type":"/errors/no_customers_found","title":"List of customers","status":404,"detail":[],"instance":"/v1/customers"} []
+[2023-10-06T15:30:38.637262+00:00] paymentAPI.INFO: No basket found {"type":"/errors/no_basket_found","title":"List of basket","status":404,"detail":[],"instance":"/v1/basket"} []
+[2023-10-06T15:37:34.621350+00:00] paymentAPI.INFO: Number of records1 [] []
+[2023-10-06T15:38:34.616394+00:00] paymentAPI.INFO: Number of records1 [] []
+[2023-10-06T15:39:35.991143+00:00] paymentAPI.INFO: Number of recordstest product [] []
