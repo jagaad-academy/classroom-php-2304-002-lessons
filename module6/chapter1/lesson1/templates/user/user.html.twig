@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello First Form!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form(user_form) }}
+    </div>
+
+{% if message|length > 0 %}
+<div class="alert alert-success">
+    {{ message }}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Profile!{% endblock %}
+
+{% block body %}
+<h1>Profile page</h1>
+    <a href="{{ path('app_user', {'id':123}) }}">User page for user {{ path('app_user', {'id':123}) }}</a>
+{% endblock %}

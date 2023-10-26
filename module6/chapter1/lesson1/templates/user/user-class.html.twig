@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello First Form!{% endblock %}
+
+{% block body %}
+{# {{ form(user_form) }} #}
+
+    {{ form_start(user_form) }}
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(user_form) }}
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                {{ form_row(user_form.firstName) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(user_form.lastName) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(user_form.email) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(user_form.password) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(user_form.address) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(user_form.submit) }}
+            </div>
+        </div>
+    {{ form_end(user_form) }}
+
+    {% if message|length > 0 %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endif %}
+{% endblock %}

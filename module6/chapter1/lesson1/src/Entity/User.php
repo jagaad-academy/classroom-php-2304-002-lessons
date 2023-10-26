@@ -6,6 +6,9 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -26,6 +29,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $lastName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $address = null;
 
     public function getId(): ?int
     {
@@ -95,5 +107,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): static
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): static
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): static
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addPropertyConstraint('address', new NotBlank());
+        $metadata->addPropertyConstraint('password', new NotBlank());
+
     }
 }

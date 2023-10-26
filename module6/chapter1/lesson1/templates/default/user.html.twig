@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello User!{% endblock %}
+
+{% block body %}
+<h1>User page</h1>
+    {{ url }}
+
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endblock %}

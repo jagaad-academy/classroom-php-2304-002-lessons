@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ title }}{% endblock %}
 
 {% block body %}
     <h1>Products list</h1>
+    <div class="alert alert-primary" role="alert">
+        {{ obj.title }}
+    </div>
 {% endblock %}

@@ -11,8 +11,13 @@ class ProductController extends AbstractController
     #[Route('/products', name: 'app_products', methods: ['GET', 'HEAD'])]
     public function index(): Response
     {
+        $objToRender = new \stdClass();
+        $objToRender->title = "Title from object";
+
+        $arrayToRender = ['title' => 'Title from array'];
+
         return $this->render('product/index.html.twig', [
-            'title' => 'Products list'
+            'obj' => $arrayToRender
         ]);
     }
 
